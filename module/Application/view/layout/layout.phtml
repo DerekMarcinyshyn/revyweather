@@ -12,7 +12,13 @@
                         ->prependStylesheet($this->basePath() . '/css/style.css')
                         ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
 
-
+        <!-- Scripts -->
+        <?php echo $this->headScript()->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+            ->prependFile($this->basePath() . '/js/weather.js')
+            ->prependFile($this->basePath() . '/js/justgage.1.0.1.min.js')
+            ->prependFile($this->basePath() . '/js/raphael.2.1.0.min.js')
+            ->prependFile($this->basePath() . '/js/bootstrap.min.js')
+            ->prependFile($this->basePath() . '/js/jquery.min.js') ?>
 
     </head>
     <body>
@@ -43,9 +49,5 @@
             </footer>
         </div> <!-- /container -->
         <?php echo $this->inlineScript() ?>
-        <!-- Scripts -->
-        <?php echo $this->headScript()->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
-            ->prependFile($this->basePath() . '/js/bootstrap.min.js')
-            ->prependFile($this->basePath() . '/js/jquery.min.js') ?>
     </body>
 </html>

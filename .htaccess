@@ -1,7 +1,7 @@
 # Serve the public folder and hide all other folders
 RewriteEngine On
 
-RewriteCond %{HTTP_HOST} ^(www.)?localhost$
+RewriteCond %{HTTP_HOST} ^(www.)?revyweather.dev$
 
 RewriteCond %{REQUEST_URI} !^/public
 
@@ -10,5 +10,5 @@ RewriteCond %{REQUEST_FILENAME} !-d
 
 RewriteRule ^(.*)$ /public/$1
 
-RewriteCond %{HTTP_HOST} ^(www.)?localhost$
+RewriteCond %{HTTP_HOST} ^(www.)?revyweather.dev$
 RewriteRule ^(/)?$ public/index.php [L]
