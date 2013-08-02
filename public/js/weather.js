@@ -15,10 +15,11 @@ $(document).ready(function() {
     });
 
     var refresh = function() {
-        $.getJSON('/data/json/current.json.php', function(data) {
+        $.getJSON('/data/json/current.json', function(data) {
 
             g.refresh(data.speed);
 
+            $('#timestamp').html(data.timestamp);
             $('#temp').html(data.tempbmp + ' &deg;C');
             $('#pressure').html('Pressure: <strong>' + data.pressurebmp + ' kPa</strong>');
             $('#humidity').html('Humidity: <strong>' + data.humiditydht + '%</strong>');

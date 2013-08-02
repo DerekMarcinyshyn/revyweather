@@ -1,1 +1,0 @@
-{"tempdht":"28.3","humiditydht":"81.4","tempbmp":"28.1","pressurebmp":"101.6","direction":"E","speed":"0.0"}

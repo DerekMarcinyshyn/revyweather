@@ -17,6 +17,11 @@ class IndexController extends AbstractActionController {
         return new ViewModel();
     }
 
+    /**
+     * Grabs the data stream from the Netduino and saves the json file
+     *
+     * @throws \RuntimeException
+     */
     public function getweatherdataAction() {
         $request = $this->getRequest();
 
@@ -27,17 +32,20 @@ class IndexController extends AbstractActionController {
         }
 
         // get netduino json
-        $url = 'http://192.168.1.50/';
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $json = curl_exec($ch);
-        curl_close($ch);
+        $json = $this->getJson('http://192.168.1.50/');
+
+        // inject a timestamp into the json
+        $json_decode = json_decode($json);
+        date_default_timezone_set('America/Los_Angeles');
+        $right_now = date('l, F j, Y g:i:s', time()) . ' PST';
+        $key = 'timestamp';
+        $json_decode->$key = $right_now;
+        $json_encode = json_encode($json_decode);
 
         // save it to data/json/current.json.php
         $directory = '/home/web/public_html/revyweather/data/json/';
-        $filename = 'current.json.php';
-        $result = file_put_contents($directory . $filename, $json);
+        $filename = 'current.json';
+        $result = file_put_contents($directory . $filename, $json_encode);
 
         if ($result)
             echo "file saved\n";
@@ -45,4 +53,22 @@ class IndexController extends AbstractActionController {
             echo "oh shit\n";
 
     }
+
+    /**
+     * Get json file from Netduino
+     *
+     * @param $url
+     * @return mixed
+     */
+    private function getJson($url) {
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $json = curl_exec($ch);
+        curl_close($ch);
+
+        return $json;
+    }
+
 }
