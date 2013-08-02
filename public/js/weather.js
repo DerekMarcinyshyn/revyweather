@@ -4,19 +4,22 @@
  * @date        July 31, 2013
  */
 $(document).ready(function() {
-    var interval = 10000; // number of milliseconds to refresh
+    var interval = 30000; // number of milliseconds to refresh
+
+    var g = new JustGage({
+        id: "gauge",
+        value: 0,
+        min: 0,
+        max: 60,
+        title: "Wind Speed"
+    });
 
     var refresh = function() {
         $.getJSON('/data/json/current.json.php', function(data) {
-            var g = new JustGage({
-                id: "gauge",
-                value: data.speed,
-                min: 0,
-                max: 60,
-                title: "Wind Speed " + data.speed +  " km/h"
-            });
 
-            $('#data').append('tempdht: ' + data.tempdht +
+            g.refresh(data.speed);
+
+            $('#data').html('tempdht: ' + data.tempdht +
                 '  humiditydht: ' + data.humiditydht +
                 '  tempbmp: ' + data.tempbmp +
                 '  pressurebmp: ' + data.pressurebmp +
@@ -24,6 +27,8 @@ $(document).ready(function() {
                 '  speed: ' + data.speed);
         });
     };
+
+    setInterval(refresh, interval);
 
     refresh();
 });
