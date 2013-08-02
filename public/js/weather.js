@@ -4,7 +4,7 @@
  * @date        July 31, 2013
  */
 $(document).ready(function() {
-    var interval = 30000; // number of milliseconds to refresh
+    var interval = 10000; // number of milliseconds to refresh
 
     var g = new JustGage({
         id: "gauge",
