@@ -1,1 +1,1 @@
-{"tempdht":"28.1","humiditydht":"81.5","tempbmp":"27.6","pressurebmp":"101.6","direction":"NW","speed":"6.7"}
+{"tempdht":"28.3","humiditydht":"81.4","tempbmp":"28.1","pressurebmp":"101.6","direction":"E","speed":"0.0"}

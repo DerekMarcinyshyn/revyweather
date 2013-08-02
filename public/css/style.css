@@ -35,3 +35,33 @@ div.container a.brand {
     margin-left: 0;
     padding: 8px 20px 12px 40px;
 }
+
+.temp {
+    font-size: 40px;
+    font-weight: 500;
+}
+
+#compass {
+    width: 160px;
+    height: 160px;
+    background-image:url('../img/compass-bg.png');
+    position: relative;
+}
+#arrow {
+    width: 140px;
+    height: 6px;
+    background-color: #780000;
+    border-left: 70px solid #2a6496;
+    position: absolute;
+    top: 80px;
+    left: 10px;
+    -webkit-transform:rotate(120deg);
+    -moz-transform:rotate(120deg);
+    -o-transform:rotate(120deg);
+    -ms-transform:rotate(120deg);
+
+    -moz-transition: all 1s ease;
+    -webkit-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    transition: all 1s ease;
+}
