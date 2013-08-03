@@ -83,15 +83,14 @@ class IndexController extends AbstractActionController {
         $json_encode = json_encode($json_decode);
 
         // save it to data/json/current.json.php
-        $directory = '/home/web/public_html/revyweather/data/json/';
+        $directory = getcwd() . '/data/json/';
         $filename = 'current.json';
         $result = file_put_contents($directory . $filename, $json_encode);
 
         if ($result)
             echo "file saved\n";
         else
-            echo "oh shit\n";
-
+            echo "oh shit. it did not save.\n";
     }
 
     /**

@@ -40,7 +40,10 @@ div.container a.brand {
     font-size: 40px;
     font-weight: 500;
 }
-
+.gauge-speed {
+    width:200px;
+    height:160px;
+}
 #compass {
     width: 160px;
     height: 160px;
