@@ -6,6 +6,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'GetWeatherData\Controller\Index' => 'GetWeatherData\Controller\IndexController',
+            'GetWeatherData\Controller\Rainfall' => 'GetWeatherData\Controller\RainfallController',
         ),
     ),
 
@@ -31,6 +32,22 @@ return array(
                             'controller'    => 'Index',
                             'action'        => 'getweatherandsave'
                         ),
+                    ),
+                ),
+            ),
+        ),
+    ),
+
+    'router' => array(
+        'routes' => array(
+            'postrainfall' => array(
+                'type' => 'literal',
+                'options' => array(
+                    'route' => '/postrainfall',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'GetWeatherData\Controller',
+                        'controller'    => 'Rainfall',
+                        'action'        => 'postrainfall'
                     ),
                 ),
             ),
