@@ -26,15 +26,16 @@ class IndexController extends AbstractActionController {
         $request = $this->getRequest();
 
         // make sure again that it is only callable from a console as to not overload the netduino
-        // or give away its location
         if (!$request instanceof ConsoleRequest) {
             throw new \RuntimeException('You can only use this action from a console!');
         }
 
         // get netduino json
-        $json = $this->getJson('http://192.168.1.50/');
+        $getweatherdata = $this->getServiceLocator()->get('config')['getweatherdata'];
+        $netduinourl = $getweatherdata['netduinourl'];
+        $json = $this->getJson($netduinourl);
 
-        // inject a timestamp into the json
+        // get the json into an object
         $json_decode = json_decode($json);
 
         // create object manager and set the columns
@@ -66,13 +67,14 @@ class IndexController extends AbstractActionController {
         $request = $this->getRequest();
 
         // make sure again that it is only callable from a console as to not overload the netduino
-        // or give away its location
         if (!$request instanceof ConsoleRequest) {
             throw new \RuntimeException('You can only use this action from a console!');
         }
 
         // get netduino json
-        $json = $this->getJson('http://192.168.1.50/');
+        $getweatherdata = $this->getServiceLocator()->get('config')['getweatherdata'];
+        $netduinourl = $getweatherdata['netduinourl'];
+        $json = $this->getJson($netduinourl);
 
         // inject a timestamp into the json
         $json_decode = json_decode($json);
@@ -109,5 +111,4 @@ class IndexController extends AbstractActionController {
 
         return $json;
     }
-
 }
