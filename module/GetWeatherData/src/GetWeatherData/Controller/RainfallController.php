@@ -3,6 +3,8 @@ namespace GetWeatherData\Controller;
 
 use Zend\Mvc\Controller\AbstractRestfulController;
 use Zend\View\Model\JsonModel;
+use Zend\Log\Logger;
+use Zend\Log\Writer\Stream;
 
 /**
  * Class RainfallController
@@ -20,7 +22,15 @@ class RainfallController extends AbstractRestfulController {
 
     public function create($data) {
 
-        //$nonce = $data['nonce'];
+        $content = $this->getRequest()->getContent();
+
+        //$nonce = json_decode($data);
+
+        $logger = new Logger;
+        $writer = new Stream('./data/logs/json.txt');
+        $logger->addWriter($writer);
+        $logger->log(Logger::INFO, 'data: ' . print_r($content,1));
+
 
         // check if the post came from netduino
 
