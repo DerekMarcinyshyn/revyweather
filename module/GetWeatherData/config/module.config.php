@@ -41,16 +41,25 @@ return array(
     'router' => array(
         'routes' => array(
             'postrainfall' => array(
-                'type' => 'literal',
+                'type' => 'Segment',
                 'options' => array(
-                    'route' => '/postrainfall',
+                    'route' => '/postrainfall[/:id]',
+                    'constraints' => array(
+                        'id' => '[0-9]+',
+                    ),
                     'defaults' => array(
                         '__NAMESPACE__' => 'GetWeatherData\Controller',
                         'controller'    => 'Rainfall',
-                        'action'        => 'postrainfall'
+                        //'action'        => 'postrainfall'
                     ),
                 ),
             ),
+        ),
+    ),
+
+    'view_manager' => array(
+        'strategies' => array(
+            'ViewJsonStrategy',
         ),
     ),
 

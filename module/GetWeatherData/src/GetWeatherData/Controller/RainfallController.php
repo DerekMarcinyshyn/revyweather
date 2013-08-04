@@ -1,27 +1,29 @@
 <?php
 namespace GetWeatherData\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
+use Zend\Mvc\Controller\AbstractRestfulController;
+use Zend\View\Model\JsonModel;
 
-class RainfallController extends AbstractActionController {
+/**
+ * Class RainfallController
+ * @package GetWeatherData\Controller
+ * @author  Derek Marcinyshyn <derek@marcinyshyn.com>
+ * @date    August 4, 2013
+ *
+ * to test via commandline
+ * $ curl -i -H "Accept: application/json" -X POST -d "rainfall=true" http://revyweather.dev/postrainfall
+ *
+ * @reference http://hounddog.github.io/blog/getting-started-with-rest-and-zend-framework-2/
+ */
 
-    public function postrainfallAction() {
+class RainfallController extends AbstractRestfulController {
 
-        $request = $this->getRequest();
+    public function create($data) {
 
-        //$data = $this->params()->fromPost('paraname');
+        $nonce = $data['nonce'];
 
+        // check if the post came from netduino
 
-        if ($request->isPost()) {
-            // get the data? $data = $request->getContent()
-
-
-            return $this->redirect()->toRoute('home');
-
-        } else {
-            return $this->redirect()->toRoute('home');
-        }
-
+        //return new JsonModel(array('data' => $data,));
     }
 }
