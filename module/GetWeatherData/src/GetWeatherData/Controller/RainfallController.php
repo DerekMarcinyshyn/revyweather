@@ -11,7 +11,7 @@ use Zend\View\Model\JsonModel;
  * @date    August 4, 2013
  *
  * to test via commandline
- * $ curl -i -H "Accept: application/json" -X POST -d "rainfall=true" http://revyweather.dev/postrainfall
+ * $ curl -v -i -H "Accept: application/json" -X POST -d "rainfall=true" http://revyweather.dev/postrainfall
  *
  * @reference http://hounddog.github.io/blog/getting-started-with-rest-and-zend-framework-2/
  */
@@ -20,10 +20,12 @@ class RainfallController extends AbstractRestfulController {
 
     public function create($data) {
 
-        $nonce = $data['nonce'];
+        //$nonce = $data['nonce'];
 
         // check if the post came from netduino
 
-        //return new JsonModel(array('data' => $data,));
+        return new JsonModel(array(
+            'data' => 'success',
+        ));
     }
 }

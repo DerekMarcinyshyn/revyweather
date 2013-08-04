@@ -76,23 +76,25 @@ class IndexController extends AbstractActionController {
         $netduinourl = $getweatherdata['netduinourl'];
         $json = $this->getJson($netduinourl);
 
-        // inject a timestamp into the json
-        $json_decode = json_decode($json);
-        date_default_timezone_set('America/Los_Angeles');
-        $right_now = date('l, F j, Y g:i:s', time()) . ' PST';
-        $key = 'timestamp';
-        $json_decode->$key = $right_now;
-        $json_encode = json_encode($json_decode);
+        if (!empty($json)) {
+            // inject a timestamp into the json
+            $json_decode = json_decode($json);
+            date_default_timezone_set('America/Los_Angeles');
+            $right_now = date('l, F j, Y g:i:s', time()) . ' PST';
+            $key = 'timestamp';
+            $json_decode->$key = $right_now;
+            $json_encode = json_encode($json_decode);
 
-        // save it to data/json/current.json.php
-        $directory = getcwd() . '/data/json/';
-        $filename = 'current.json';
-        $result = file_put_contents($directory . $filename, $json_encode);
+            // save it to data/json/current.json.php
+            $directory = getcwd() . '/data/json/';
+            $filename = 'current.json';
+            $result = file_put_contents($directory . $filename, $json_encode);
 
-        if ($result)
-            echo "file saved\n";
-        else
-            echo "oh shit. it did not save.\n";
+            if ($result)
+                echo "file saved\n";
+            else
+                echo "oh shit. it did not save.\n";
+        }
     }
 
     /**
