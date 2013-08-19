@@ -43,12 +43,15 @@ class IndexController extends AbstractActionController {
 
         // create a weather entity object
         $weather = new \GetWeatherData\Entity\Weather();
-        $weather->setTempdht($json_decode->tempdht);
-        $weather->setHumiditydht($json_decode->humiditydht);
-        $weather->setTempbmp($json_decode->tempbmp);
-        $weather->setPressurebmp($json_decode->pressurebmp);
+        $weather->setTemp($json_decode->temp);
+        $weather->setHumidity($json_decode->humidity);
+        $weather->setRelativehumidity($json_decode->relativehumidity);
         $weather->setDirection($json_decode->direction);
         $weather->setSpeed($json_decode->speed);
+
+        // get the raspi data
+        $weather->setBarometer($this->getBarometer());
+        $weather->setBmp_temperature($this->getTemperature());
 
         // set timezone
         date_default_timezone_set('America/Los_Angeles');
@@ -85,16 +88,11 @@ class IndexController extends AbstractActionController {
             $json_decode->$key = $right_now;
 
             // add barometer and temperature from Raspberry Pi
-            $barometer = file_get_contents('http://192.168.1.20:7000/devices/bmp/sensor/pressure/sea/pa');
-            $altitude = 500;
-            $altimeter = 101325 * pow(((288 - 0.0065 * $altitude) / 288), 5.256);
-            $pressure = ((101325 + (int)$barometer) - $altimeter) / 1000;
             $key_barometer = 'barometer';
-            $json_decode->$key_barometer = number_format($pressure, 1);
+            $json_decode->$key_barometer = $this->getBarometer();
 
-            $bmp_temperature = file_get_contents('http://192.168.1.20:7000/devices/bmp/sensor/temperature/c');
             $key_bmp_temperature = 'bmp_temperature';
-            $json_decode->$key_bmp_temperature = number_format($bmp_temperature, 1);
+            $json_decode->$key_bmp_temperature = $this->getTemperature();
 
             // encode it again
             $json_encode = json_encode($json_decode);
@@ -126,5 +124,46 @@ class IndexController extends AbstractActionController {
         curl_close($ch);
 
         return $json;
+    }
+
+    /**
+     * Get the Sea level pressure from BMP085 on the Raspberry Pi and convert to 500m ASL
+     *
+     * @return float|string
+     */
+    private function getBarometer() {
+        $getweatherdata = $this->getServiceLocator()->get('config')['getweatherdata'];
+        $raspiurl = $getweatherdata['raspiurl'];
+
+        if ($barometer = file_get_contents($raspiurl . 'devices/bmp/sensor/pressure/sea/pa')) {
+            $barometer = file_get_contents($raspiurl . 'devices/bmp/sensor/pressure/sea/pa');
+            $altitude = 500;
+            $altimeter = 101325 * pow(((288 - 0.0065 * $altitude) / 288), 5.256);
+            $pressure = number_format((((101325 + (int)$barometer) - $altimeter) / 1000), 1);
+
+        } else {
+            $pressure = 'N/A';
+        }
+
+        return $pressure;
+    }
+
+    /**
+     * Get the Celsius temperature from BMP085 on the Raspberry Pi
+     *
+     * @return string
+     */
+    private function getTemperature() {
+        $getweatherdata = $this->getServiceLocator()->get('config')['getweatherdata'];
+        $raspiurl = $getweatherdata['raspiurl'];
+
+        if ($temperature = file_get_contents($raspiurl . 'devices/bmp/sensor/temperature/c')) {
+            $temperature = file_get_contents($raspiurl . 'devices/bmp/sensor/temperature/c');
+            $temp = number_format($temperature, 1);
+        } else {
+            $temp = 'N/A';
+        }
+
+        return $temp;
     }
 }
