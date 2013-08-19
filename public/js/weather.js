@@ -20,9 +20,9 @@ $(document).ready(function() {
             g.refresh(data.speed);
 
             $('#timestamp').html(data.timestamp);
-            $('#temp').html(data.tempbmp + ' &deg;C');
+            $('#temp').html(data.temp + ' &deg;C');
             $('#pressure').html('Pressure: <strong>' + data.pressurebmp + ' kPa</strong>');
-            $('#humidity').html('Humidity: <strong>' + data.humiditydht + '%</strong>');
+            $('#humidity').html('Humidity: <strong>' + data.relativehumidity + '%</strong>');
             $('#wind').html('Wind: <strong>' + data.direction + ' ' + data.speed + ' km/h</strong>');
 
             var degrees = 0;

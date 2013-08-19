@@ -85,7 +85,7 @@ class IndexController extends AbstractActionController {
             $json_decode->$key = $right_now;
             $json_encode = json_encode($json_decode);
 
-            // save it to data/json/current.json.php
+            // save it to data/json/current.json
             $directory = getcwd() . '/data/json/';
             $filename = 'current.json';
             $result = file_put_contents($directory . $filename, $json_encode);
