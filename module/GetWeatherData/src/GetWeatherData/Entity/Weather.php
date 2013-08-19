@@ -21,22 +21,27 @@ class Weather {
     /**
      * @ORM\Column(type="string")
      */
-    protected $tempdht;
+    protected $temp;
 
     /**
      * @ORM\Column(type="string")
      */
-    protected $humiditydht;
+    protected $humidity;
 
     /**
      * @ORM\Column(type="string")
      */
-    protected $tempbmp;
+    protected $relativehumidity;
 
     /**
      * @ORM\Column(type="string")
      */
-    protected $pressurebmp;
+    protected $bmp_temperature;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $barometer;
 
     /**
      * @ORM\Column(type="string")
@@ -65,87 +70,108 @@ class Weather {
     }
 
     /**
-     * Set tempdht
+     * Set temp
      *
-     * @param string $tempdht
+     * @param string $temp
      * @return Weather
      */
-    public function setTempdht($tempdht) {
-        $this->tempdht = $tempdht;
+    public function setTemp($temp) {
+        $this->temp = $temp;
 
         return $this;
     }
 
     /**
-     * Get tempdht
+     * Get temp
      *
      * @return string
      */
-    public function getTempdht() {
-        return $this->tempdht;
+    public function getTemp() {
+        return $this->temp;
     }
 
     /**
-     * Set humiditydht
+     * Set humidity
      *
-     * @param $humiditydht
+     * @param $humidity
      * @return Weather
      */
-    public function setHumiditydht($humiditydht) {
-        $this->humiditydht = $humiditydht;
+    public function setHumidity($humidity) {
+        $this->humidity = $humidity;
 
         return $this;
     }
 
     /**
-     * Get humiditydht
+     * Get humidity
      *
      * @return string
      */
-    public function getHumiditydht() {
-        return $this->humiditydht;
+    public function getHumidity() {
+        return $this->humidity;
     }
 
     /**
-     * Set tempbmp
+     * Set relativehumidity
      *
-     * @param $tempbmp
+     * @param $relativehumidity
      * @return Weather
      */
-    public function setTempbmp($tempbmp) {
-        $this->tempbmp = $tempbmp;
+    public function setRelativehumidity($relativehumidity) {
+        $this->relativehumidity = $relativehumidity;
 
         return $this;
     }
 
     /**
-     * Get tempbmp
+     * Get relativehumidity
      *
      * @return string
      */
-    public function getTempbmp() {
-        return $this->tempbmp;
+    public function getRelativehumidity() {
+        return $this->relativehumidity;
     }
 
     /**
-     * Set pressurebmp
+     * Set bmp_temperature
      *
-     * @param $pressurebmp
+     * @param $bmp_temperature
      * @return Weather
      */
-    public function setPressurebmp($pressurebmp) {
-        $this->pressurebmp = $pressurebmp;
+    public function setBmp_temperature($bmp_temperature) {
+        $this->bmp_temperature = $bmp_temperature;
 
         return $this;
     }
 
     /**
-     * Get pressurebmp
+     * Get bmp_temperature
      *
      * @return string
      */
-    public function getPressurebmp() {
-        return $this->pressurebmp;
+    public function getBmp_temperature() {
+        return $this->bmp_temperature;
+    }
+
+    /**
+     * Set barometer
+     *
+     * @param $barometer
+     * @return Weather
+     */
+    public function setBarometer($barometer) {
+        $this->barometer = $barometer;
+
+        return $this;
+    }
+
+    /**
+     * Get barometer
+     *
+     * @return string
+     */
+    public function getBarometer() {
+        return $this->barometer;
     }
 
     /**
