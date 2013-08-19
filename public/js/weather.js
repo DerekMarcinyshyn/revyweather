@@ -20,8 +20,8 @@ $(document).ready(function() {
             g.refresh(data.speed);
 
             $('#timestamp').html(data.timestamp);
-            $('#temp').html(data.temp + ' &deg;C');
-            $('#pressure').html('Pressure: <strong>' + data.pressurebmp + ' kPa</strong>');
+            $('#temp').html(data.bmp_temperature + ' &deg;C');
+            $('#pressure').html('Pressure: <strong>' + data.barometer + ' kPa</strong>');
             $('#humidity').html('Humidity: <strong>' + data.relativehumidity + '%</strong>');
             $('#wind').html('Wind: <strong>' + data.direction + ' ' + data.speed + ' km/h</strong>');
 

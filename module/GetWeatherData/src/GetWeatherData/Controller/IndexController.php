@@ -83,10 +83,24 @@ class IndexController extends AbstractActionController {
             $right_now = date('l, F j, Y g:i:s', time()) . ' PST';
             $key = 'timestamp';
             $json_decode->$key = $right_now;
+
+            // add barometer and temperature from Raspberry Pi
+            $barometer = file_get_contents('http://192.168.1.20:7000/devices/bmp/sensor/pressure/sea/pa');
+            $altitude = 500;
+            $altimeter = 101325 * pow(((288 - 0.0065 * $altitude) / 288), 5.256);
+            $pressure = ((101325 + (int)$barometer) - $altimeter) / 1000;
+            $key_barometer = 'barometer';
+            $json_decode->$key_barometer = number_format($pressure, 1);
+
+            $bmp_temperature = file_get_contents('http://192.168.1.20:7000/devices/bmp/sensor/temperature/c');
+            $key_bmp_temperature = 'bmp_temperature';
+            $json_decode->$key_bmp_temperature = number_format($bmp_temperature, 1);
+
+            // encode it again
             $json_encode = json_encode($json_decode);
 
             // save it to data/json/current.json
-            $directory = getcwd() . '/data/json/';
+            $directory = getcwd() . '/public/data/json/';
             $filename = 'current.json';
             $result = file_put_contents($directory . $filename, $json_encode);
 
