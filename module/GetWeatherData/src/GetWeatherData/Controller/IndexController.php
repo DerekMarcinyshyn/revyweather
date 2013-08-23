@@ -30,10 +30,13 @@ class IndexController extends AbstractActionController {
             throw new \RuntimeException('You can only use this action from a console!');
         }
 
-        // get netduino json
+        // get weather data json
         $getweatherdata = $this->getServiceLocator()->get('config')['getweatherdata'];
-        $netduinourl = $getweatherdata['netduinourl'];
-        $json = $this->getJson($netduinourl);
+        $key = $getweatherdata['key'];
+
+        // get weather data
+        $url = 'http://derek.is-a-rockstar.com/weather-station/data.php?key=' . $key;
+        $json = $this->getJson($url);
 
         // get the json into an object
         $json_decode = json_decode($json);
@@ -48,13 +51,8 @@ class IndexController extends AbstractActionController {
         $weather->setRelativehumidity($json_decode->relativehumidity);
         $weather->setDirection($json_decode->direction);
         $weather->setSpeed($json_decode->speed);
-
-        // get the raspi data
-        $weather->setBarometer($this->getBarometer());
-        $weather->setBmp_temperature($this->getTemperature());
-
-        // set timezone
-        date_default_timezone_set('America/Los_Angeles');
+        $weather->setBarometer($json_decode->barometer);
+        $weather->setBmp_temperature($json_decode->bmp_temperature);
         $weather->setTimestamp(new \DateTime("now"));
 
         $objectManager->persist($weather);
@@ -74,33 +72,18 @@ class IndexController extends AbstractActionController {
             throw new \RuntimeException('You can only use this action from a console!');
         }
 
-        // get netduino json
         $getweatherdata = $this->getServiceLocator()->get('config')['getweatherdata'];
-        $netduinourl = $getweatherdata['netduinourl'];
-        $json = $this->getJson($netduinourl);
+        $key = $getweatherdata['key'];
+
+        // get weather data
+        $url = 'http://derek.is-a-rockstar.com/weather-station/data.php?key=' . $key;
+        $json = $this->getJson($url);
 
         if (!empty($json)) {
-            // inject a timestamp into the json
-            $json_decode = json_decode($json);
-            date_default_timezone_set('America/Los_Angeles');
-            $right_now = date('l, F j, Y g:i:s', time()) . ' PST';
-            $key = 'timestamp';
-            $json_decode->$key = $right_now;
-
-            // add barometer and temperature from Raspberry Pi
-            $key_barometer = 'barometer';
-            $json_decode->$key_barometer = $this->getBarometer();
-
-            $key_bmp_temperature = 'bmp_temperature';
-            $json_decode->$key_bmp_temperature = $this->getTemperature();
-
-            // encode it again
-            $json_encode = json_encode($json_decode);
-
             // save it to data/json/current.json
             $directory = getcwd() . '/public/data/json/';
             $filename = 'current.json';
-            $result = file_put_contents($directory . $filename, $json_encode);
+            $result = file_put_contents($directory . $filename, $json);
 
             if ($result)
                 echo "file saved\n";
@@ -124,46 +107,5 @@ class IndexController extends AbstractActionController {
         curl_close($ch);
 
         return $json;
-    }
-
-    /**
-     * Get the Sea level pressure from BMP085 on the Raspberry Pi and convert to 500m ASL
-     *
-     * @return float|string
-     */
-    private function getBarometer() {
-        $getweatherdata = $this->getServiceLocator()->get('config')['getweatherdata'];
-        $raspiurl = $getweatherdata['raspiurl'];
-
-        if ($barometer = file_get_contents($raspiurl . 'devices/bmp/sensor/pressure/sea/pa')) {
-            $barometer = file_get_contents($raspiurl . 'devices/bmp/sensor/pressure/sea/pa');
-            $altitude = 500;
-            $altimeter = 101325 * pow(((288 - 0.0065 * $altitude) / 288), 5.256);
-            $pressure = number_format((((101325 + (int)$barometer) - $altimeter) / 1000), 1);
-
-        } else {
-            $pressure = 'N/A';
-        }
-
-        return $pressure;
-    }
-
-    /**
-     * Get the Celsius temperature from BMP085 on the Raspberry Pi
-     *
-     * @return string
-     */
-    private function getTemperature() {
-        $getweatherdata = $this->getServiceLocator()->get('config')['getweatherdata'];
-        $raspiurl = $getweatherdata['raspiurl'];
-
-        if ($temperature = file_get_contents($raspiurl . 'devices/bmp/sensor/temperature/c')) {
-            $temperature = file_get_contents($raspiurl . 'devices/bmp/sensor/temperature/c');
-            $temp = number_format($temperature, 1);
-        } else {
-            $temp = 'N/A';
-        }
-
-        return $temp;
     }
 }
