@@ -160,10 +160,14 @@ class Weather {
         $currentConditions = $xml->currentConditions;
         $location = $currentConditions->station;
         $condition = $currentConditions->condition;
+        $dateTime = $xml->dateTime[1]->textSummary;
+
+        //print_r($dateTime);
 
         $forecast = array(
             'location'      => $location,
-            'condition'  => $condition,
+            'condition'     => $condition,
+            'dateTime'      => $dateTime,
         );
 
         $this->setForecast($forecast);
@@ -181,8 +185,23 @@ class Weather {
         return $forecast['location'];
     }
 
+    /**
+     * Get the condition
+     *
+     * @return string $condition
+     */
     public function getCondition() {
         $forecast = $this->getForecast();
         return $forecast['condition'];
+    }
+
+    /**
+     * Get the date and time of weather station reading
+     *
+     * @return string $dateTime
+     */
+    public function getDateTime() {
+        $forecast = $this->getForecast();
+        return $forecast['dateTime'];
     }
 }
