@@ -10,7 +10,7 @@ $(document).ready(function() {
         id: "gauge-speed",
         value: 0,
         min: 0,
-        max: 60,
+        max: 20,
         title: "Wind Speed"
     });
 
