@@ -12,7 +12,8 @@ return array(
         'DoctrineORMModule',
         'GetWeatherData',
         'Application',
-        'ECWeather'
+        'ECWeather',
+        'DkcwdZf2Munee'
         ),
     'module_listener_options' => array(
         'module_paths' => array(
