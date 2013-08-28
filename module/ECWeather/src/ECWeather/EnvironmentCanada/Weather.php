@@ -67,6 +67,20 @@ class Weather {
      */
     private $forecastAbbreviatedTextSummary;
 
+    /**
+     * The sunrise for that day
+     *
+     * @var string $sunrise
+     */
+    private $sunrise;
+
+    /**
+     * The sunset for that day
+     *
+     * @var string $sunset
+     */
+    private $sunset;
+
 
     /**
      * Setter for Environment Canada's service API URL
@@ -195,6 +209,8 @@ class Weather {
         $visibility = $currentConditions->visibility;
         $currentIconCode = $currentConditions->iconCode;
         $forecastGroup = $xml->forecastGroup->forecast;
+        $sunrise = $xml->riseSet->dateTime[1]->hour . ':' . $xml->riseSet->dateTime[1]->minute;
+        $sunset = $xml->riseSet->dateTime[3]->hour . ':' . $xml->riseSet->dateTime[3]->minute;
 
         foreach($forecastGroup as $key => $forecastDay) {
             $this->forecastPeriod[] = $forecastDay->period;
@@ -222,11 +238,33 @@ class Weather {
             'visibility'    => $visibility,
             'iconCode'      => $currentIconCode,
             'forecast'      => $forecastArray,
+            'sunrise'       => $sunrise,
+            'sunset'        => $sunset,
         );
 
         $this->setForecast($forecast);
 
         return $this;
+    }
+
+    /**
+     * Get the sunset text summary
+     *
+     * @return string
+     */
+    public function getSunset() {
+        $forecast = $this->getForecast();
+        return $forecast['sunset'];
+    }
+
+    /**
+     * Get the sunrise text summary
+     *
+     * @return string
+     */
+    public function getSunrise() {
+        $forecast = $this->getForecast();
+        return $forecast['sunrise'];
     }
 
     /**
