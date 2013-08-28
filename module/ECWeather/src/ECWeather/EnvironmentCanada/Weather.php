@@ -213,7 +213,7 @@ class Weather {
         $sunset = $xml->riseSet->dateTime[3]->hour . ':' . $xml->riseSet->dateTime[3]->minute;
 
         foreach($forecastGroup as $key => $forecastDay) {
-            $this->forecastPeriod[] = $forecastDay->period;
+            $this->forecastPeriod[] = $forecastDay->period['textForecastName'];
             $this->forecastTextSummary[] = $forecastDay->textSummary;
             $this->forecastIconCode[] = $forecastDay->abbreviatedForecast->iconCode;
             $this->forecastAbbreviatedTextSummary[] = $forecastDay->abbreviatedForecast->textSummary;

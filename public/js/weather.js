@@ -17,13 +17,15 @@ $(document).ready(function() {
     var refresh = function() {
         $.getJSON('/data/json/current.json', function(data) {
 
-            g.refresh(data.speed);
+            var windSpeed = (data.speed * 1.60934);
+            windSpeed = Math.ceil(windSpeed * 10) / 10;
+            g.refresh(windSpeed);
 
             $('#timestamp').html(data.timestamp);
             $('#temp').html(data.bmp_temperature + ' &deg;C');
             $('#pressure').html('Pressure: <strong>' + data.barometer + ' kPa</strong>');
             $('#humidity').html('Humidity: <strong>' + data.relativehumidity + '%</strong>');
-            $('#wind').html('Wind: <strong>' + data.direction + ' ' + data.speed + ' km/h</strong>');
+            $('#wind').html('Wind: <strong>' + data.direction + ' ' + windSpeed + ' km/h</strong>');
 
             var degrees = 0;
 
