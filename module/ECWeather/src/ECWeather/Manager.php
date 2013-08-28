@@ -30,11 +30,19 @@ class Manager {
         $this->cache = array();
     }
 
+    /**
+     * The Environment Canada main getWeather
+     *
+     * @param $cityName
+     * @return $this
+     * @throws \Exception
+     */
     public function getWeather($cityName) {
         if (isset($this->cache[$cityName])) {
             $weather = $this->cache[$cityName];
         } else {
             $weather = new Weather($cityName);
+            $weather->fetch();
 
             // Cache the weather object so we don't have to do HTTP request on each call
             // Enables to get multiple object's properties at different times
@@ -45,6 +53,6 @@ class Manager {
             throw new \Exception('Location does not exist');
         }
 
-        return $weather->fetch();
+        return $weather;
     }
 }

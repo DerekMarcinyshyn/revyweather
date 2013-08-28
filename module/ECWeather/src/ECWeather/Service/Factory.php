@@ -15,7 +15,7 @@ class Factory implements FactoryInterface {
      */
     public function createService(ServiceLocatorInterface $serviceLocator) {
         $config = $serviceLocator->get('Configuration');
-        $params = $config['ECWeather']['params'];
+        $params = $config['ECWeather'];
 
         $manager = new Manager($params);
 
