@@ -12,6 +12,8 @@ body {
 .live-webcam { background: #aeaeae; }
 .forecast { background: #f5f5f5; }
 
+.right-now-time { margin-bottom: 20px; }
+
 .zf-green { color: #68b604; }
 
 .btn-success {

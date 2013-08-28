@@ -11,7 +11,7 @@
 
 <div id="right-now" class="right-now">
     <div class="container">
-        <div class="col-lg-12">
+        <div class="col-lg-12 right-now-time">
             <h2>RIGHT NOW</h2>
             <div id="timestamp" class="timestamp text-muted"></div>
             <!-- <div class="timestamp text-muted"><?php echo $this->getWeather('Revelstoke')->getDateTime(); ?></div> -->
@@ -44,7 +44,7 @@
             <h2>LIVE WEBCAM</h2>
         </div>
         <div class="col-lg-12">
-            <img src="http://derek.is-a-rockstar.com/weather-station/latest.jpg" width="1280" height="720" alt="live-webcam" class="img-rounded img-responsive webcam"/>
+            <img src="/img/latest.jpg?<?php echo time() ?>" width="1280" height="720" alt="live-webcam" id="webcam-latest" class="img-rounded img-responsive webcam"/>
         </div>
     </div>
 </div>

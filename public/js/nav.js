@@ -2,7 +2,7 @@ jQuery(document).ready(function() {
     jQuery('#nav').onePageNav({
         currentClass: 'active',
         changeHash: false,
-        scrollSpeed: 750,
+        scrollSpeed: 450,
         scrollOffset: 30,
         scrollThreshold: 0.5,
         filter: '',
@@ -12,6 +12,6 @@ jQuery(document).ready(function() {
         scrollChange: function($currentListItem) {}
     });
     $(function() {
-        $("#toTop").scrollToTop(1000);
+        $("#toTop").scrollToTop(350);
     });
 });

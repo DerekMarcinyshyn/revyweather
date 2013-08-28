@@ -62,6 +62,14 @@ $(document).ready(function() {
     };
 
     setInterval(refresh, interval);
-
     refresh();
+
+    // get the latest webcam image
+    var camInterval = 180000;
+    var src = '../img/latest.jpg';
+    var refreshLatest = function(){
+        $('#webcam-latest').attr('src', src);
+    };
+
+    setInterval(refreshLatest, camInterval);
 });

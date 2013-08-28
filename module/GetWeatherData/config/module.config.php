@@ -34,6 +34,17 @@ return array(
                         ),
                     ),
                 ),
+
+                'getwebcamimage' => array(
+                    'options' => array(
+                        'route'     => 'getwebcamimage',
+                        'defaults'  => array(
+                            '__NAMESPACE__' => 'GetWeatherData\Controller',
+                            'controller'    => 'Index',
+                            'action'        => 'getwebcamimage'
+                        ),
+                    ),
+                ),
             ),
         ),
     ),

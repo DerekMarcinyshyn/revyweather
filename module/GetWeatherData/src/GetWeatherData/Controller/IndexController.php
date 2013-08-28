@@ -93,7 +93,37 @@ class IndexController extends AbstractActionController {
     }
 
     /**
-     * Get json file from Netduino
+     * Get the latest webcam image from local Selkirk server
+     *
+     * @throws \RuntimeException
+     */
+    public function getwebcamimageAction() {
+        $request = $this->getRequest();
+
+        // make sure again that it is only callable from a console as to not overload the netduino
+        if (!$request instanceof ConsoleRequest) {
+            throw new \RuntimeException('You can only use this action from a console!');
+        }
+
+        $url = 'http://derek.is-a-rockstar.com/weather-station/latest.jpg';
+        $image = file_get_contents($url);
+
+        if ($image) {
+            $latest = getcwd() . '/public/img/latest.jpg';
+            $result = file_put_contents($latest, $image);
+
+            if ($result)
+                echo "file saved\n";
+            else
+                echo "image not saved\n";
+        } else {
+            echo "could not get image\n\n";
+        }
+
+    }
+
+    /**
+     * Get json file from local Selkirk server
      *
      * @param $url
      * @return mixed
