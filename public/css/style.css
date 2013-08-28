@@ -1,18 +1,25 @@
 body {
     padding-top: 60px;
     padding-bottom: 40px;
-    background: #f5f5f5;
+    background: #f9f9f9;
 }
 
 .right-now, .live-webcam, .forecast {
     padding: 20px 0 100px 0;
 }
 
-.right-now { background: #f5f5f5; }
-.live-webcam { background: #aeaeae; }
-.forecast { background: #f5f5f5; }
-
+.right-now { background: #f9f9f9; }
+.text-very-muted { color: #ccc; }
+.live-webcam { background: #333; }
 .right-now-time { margin-bottom: 20px; }
+.conditions-spacer { margin-top: 16px; }
+.right-now-spacer { margin-top: 30px; }
+
+.forecast { background: #e5e5e5; }
+.forecast-period {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #bbbbbb;
+}
 
 .zf-green { color: #68b604; }
 
@@ -76,10 +83,6 @@ div.container a.brand {
     -webkit-transition: all 1s ease;
     -o-transition: all 1s ease;
     transition: all 1s ease;
-}
-
-.webcam {
-    border:1px solid #999;
 }
 
 #toTop {

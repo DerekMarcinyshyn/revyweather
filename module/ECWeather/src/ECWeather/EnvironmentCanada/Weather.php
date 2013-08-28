@@ -40,6 +40,35 @@ class Weather {
     private $cityName;
 
     /**
+     * The forecast period name
+     *
+     * @var array $forecastPeriod
+     */
+    private $forecastPeriod;
+
+    /**
+     * The forecast text summary
+     *
+     * @var array $forecastTextSummary
+     */
+    private $forecastTextSummary;
+
+    /**
+     * The forecast icon code
+     *
+     * @var array $forecastIconCode
+     */
+    private $forecastIconCode;
+
+    /**
+     * The abbreviated text summary
+     *
+     * @var array $forecastAbbreviatedTextSummary
+     */
+    private $forecastAbbreviatedTextSummary;
+
+
+    /**
      * Setter for Environment Canada's service API URL
      *
      * @param string $url
@@ -78,8 +107,8 @@ class Weather {
         if (!($this->httpClient instanceof \Zend\Http\Client)) {
             $client = new \Zend\Http\Client();
 
-            $client->setOptions(array('maxredirects' => 2,
-                                    'timeout' => 5));
+            //$client->setOptions(array('maxredirects' => 2,
+            //                        'timeout' => 5));
 
             $this->setHttpClient($client);
         }
@@ -127,8 +156,6 @@ class Weather {
         return $this->cityName;
     }
 
-
-
     /**
      * Main constructor
      *
@@ -137,7 +164,11 @@ class Weather {
     public function __construct($cityName) {
         $this->serviceApiUrl = "http://dd.weatheroffice.gc.ca/citypage_weather/xml/BC/s0000679_e.xml";
 
-        $this->httpClient = new \Zend\Http\Client($this->getServiceApiUrl());
+        $this->httpClient = new Client($this->getServiceApiUrl());
+        $this->httpClient->setOptions(array(
+            'maxredirects'  => 0,
+            'timeout'       => 10
+        ));
     }
 
     public function fetch() {
@@ -161,18 +192,104 @@ class Weather {
         $location = $currentConditions->station;
         $condition = $currentConditions->condition;
         $dateTime = $xml->dateTime[1]->textSummary;
+        $visibility = $currentConditions->visibility;
+        $currentIconCode = $currentConditions->iconCode;
+        $forecastGroup = $xml->forecastGroup->forecast;
 
-        //print_r($dateTime);
+        foreach($forecastGroup as $key => $forecastDay) {
+            $this->forecastPeriod[] = $forecastDay->period;
+            $this->forecastTextSummary[] = $forecastDay->textSummary;
+            $this->forecastIconCode[] = $forecastDay->abbreviatedForecast->iconCode;
+            $this->forecastAbbreviatedTextSummary[] = $forecastDay->abbreviatedForecast->textSummary;
+        }
+
+        $forecastArray = array();
+        $count = 0;
+        foreach($this->forecastPeriod as $data) {
+            $forecastArray[] = array(
+                'forecastPeriod'        => $this->forecastPeriod[$count],
+                'forecastTextSummary'   => $this->forecastTextSummary[$count],
+                'forecastIconCode'      => $this->forecastIconCode[$count],
+                'abbreviatedTextSummary'=> $this->forecastAbbreviatedTextSummary[$count]
+            );
+            $count++;
+        }
 
         $forecast = array(
             'location'      => $location,
             'condition'     => $condition,
             'dateTime'      => $dateTime,
+            'visibility'    => $visibility,
+            'iconCode'      => $currentIconCode,
+            'forecast'      => $forecastArray,
         );
 
         $this->setForecast($forecast);
 
         return $this;
+    }
+
+    /**
+     * Get the abbreviated text summary -- used for alt tag in icon code
+     *
+     * @param int $dayNumber
+     * @return string
+     */
+    public function getAbbreviatedTextSummary($dayNumber) {
+        $forecast = $this->getForecast();
+        return $forecast['forecast'][$dayNumber]['abbreviatedTextSummary'];
+    }
+
+    /**
+     * Get the forecast period icon code
+     *
+     * @param int $dayNumber
+     * @return string
+     */
+    public function getForecastIconCode($dayNumber) {
+        $forecast = $this->getForecast();
+        return $forecast['forecast'][$dayNumber]['forecastIconCode'];
+    }
+    /**
+     * Get the forecast text summary
+     *
+     * @param int $dayNumber
+     * @return string
+     */
+    public function getForecastTextSummary($dayNumber) {
+        $forecast = $this->getForecast();
+        return $forecast['forecast'][$dayNumber]['forecastTextSummary'];
+    }
+
+    /**
+     * Get the forecast period day
+     *
+     * @param int $dayNumber
+     * @return string
+     */
+    public function getForecastPeriod($dayNumber) {
+        $forecast = $this->getForecast();
+        return $forecast['forecast'][$dayNumber]['forecastPeriod'];
+    }
+
+    /**
+     * Get the current conditions icon code
+     *
+     * @return string
+     */
+    public function getIconCode() {
+        $forecast = $this->getForecast();
+        return $forecast['iconCode'];
+    }
+
+    /**
+     * Get the visibility
+     *
+     * @return string
+     */
+    public function getVisibility() {
+        $forecast = $this->getForecast();
+        return $forecast['visibility'];
     }
 
     /**
