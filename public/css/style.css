@@ -4,7 +4,7 @@ body {
     background: #f9f9f9;
 }
 
-.right-now, .live-webcam, .forecast {
+.right-now, .live-webcam, .forecast, .map {
     padding: 20px 0 100px 0;
 }
 
@@ -18,7 +18,7 @@ body {
 .forecast { background: #e5e5e5; }
 .forecast-period {
     padding-bottom: 20px;
-    border-bottom: 1px solid #bbbbbb;
+    border-bottom: 1px solid #ddd;
 }
 
 .zf-green { color: #68b604; }
@@ -110,4 +110,9 @@ div.container a.brand {
     opacity: 0.9;
     filter: alpha(opacity=80); /* For IE8 and earlier */
     text-decoration: none;
+}
+
+.map-container {
+    width: 100%;
+    height: 800px;
 }
