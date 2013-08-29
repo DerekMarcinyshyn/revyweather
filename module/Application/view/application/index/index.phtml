@@ -11,39 +11,68 @@
 
 <div id="right-now" class="right-now">
     <div class="container">
-        <div class="col-lg-12 right-now-time">
+        <div class="col-lg-12 right-now-time margin-top-40">
             <h2>RIGHT NOW</h2>
+            <h4>Courthouse Area</h4>
             <!-- <p class="text-very-muted"><small>Refreshed every 10 seconds</small></p> -->
             <div id="timestamp" class="timestamp text-muted"></div>
-            <!-- <div class="timestamp text-muted"><?php echo $this->getWeather('Revelstoke')->getDateTime(); ?></div> -->
         </div>
+
         <div class="col-md-3">
             <div class="current-icon">
                 <img alt="<?php echo $this->getWeather('Revelstoke')->getCondition(); ?>" src="/img/wx/icons-large/<?php echo $this->getWeather('Revelstoke')->getIconCode(); ?>.png" height="120" width="120" />
             </div>
             <div id="temp" class="temp"></div>
         </div>
-
         <div class="col-md-3">
             <div class="conditions-spacer">&nbsp;</div>
             <div id="condition" class="condition">Condition: <strong><?php echo $this->getWeather('Revelstoke')->getCondition(); ?></strong></div>
             <div id="pressure" class="pressure"></div>
             <div id="humidity" class="humidity"></div>
             <div id="wind" class="wind"></div>
-            <div id="visibility" class="visibility">Visibility: <strong><?php echo $this->getWeather('Revelstoke')->getVisibility(); ?> km</strong></div>
-            <div class="sunrise">Sunrise: <strong><?php echo $this->getWeather('Revelstoke')->getSunrise(); ?></strong></div>
-            <div class="sunset">Sunset: <strong><?php echo $this->getWeather('Revelstoke')->getSunset(); ?></strong></div>
         </div>
-
         <div class="col-md-3 right-now-spacer">
             <div id="gauge-speed" class="gauge-speed"></div>
         </div>
-
         <div class="col-md-3 right-now-spacer">
             <div id="compass">
                 <div id="arrow"></div>
             </div>​
         </div>
+
+        <div class="clearfix"></div>
+
+        <div class="col-lg-12 right-now-time margin-top-40">
+            <h4>Revelstoke Airport</h4>
+            <div class="timestamp text-muted"><?php echo $this->getWeather('Revelstoke')->getDateTime(); ?></div>
+        </div>
+        <div class="col-md-3">
+            <div class="current-icon">
+                <img alt="<?php echo $this->getWeather('Revelstoke')->getCondition(); ?>" src="/img/wx/icons-large/<?php echo $this->getWeather('Revelstoke')->getIconCode(); ?>.png" height="120" width="120" />
+            </div>
+            <div id="temperature" class="temp"><?php echo $this->getWeather('Revelstoke')->getTemperature(); ?> &deg;C</div>
+        </div>
+        <div class="col-md-3">
+            <div id="condition" class="condition">Condition: <strong><?php echo $this->getWeather('Revelstoke')->getCondition(); ?></strong></div>
+            <div id="pressure" class="pressure">Pressure: <strong><?php echo $this->getWeather('Revelstoke')->getPressure(); ?> kPa</strong></div>
+            <div id="humidity" class="humidity">Humidity: <strong><?php echo $this->getWeather('Revelstoke')->getRelativeHumidity(); ?>%</strong></div>
+            <div id="wind" class="wind">Wind: <strong><?php echo $this->getWeather('Revelstoke')->getDirection(); echo '&nbsp;'; echo $this->getWeather('Revelstoke')->getSpeed(); ?>  km/h</strong></div>
+        </div>
+        <div class="col-md-3">
+            <div id="visibility" class="visibility">Visibility: <strong><?php echo $this->getWeather('Revelstoke')->getVisibility(); ?> km</strong></div>
+            <div id="dewpoint" class="dewpoint">Dewpoint: <strong><?php echo $this->getWeather('Revelstoke')->getDewpoint(); ?> &deg;C</strong></div>
+            <div class="sunrise">Sunrise: <strong><?php echo $this->getWeather('Revelstoke')->getSunrise(); ?></strong></div>
+            <div class="sunset">Sunset: <strong><?php echo $this->getWeather('Revelstoke')->getSunset(); ?></strong></div>
+        </div>
+        <div class="col-md-3">
+            <div class="yesterday">Yesterday High Temperature: <strong><?php echo $this->getWeather('Revelstoke')->getHighTemp(); ?> &deg;C</strong></div>
+            <div class="yesterday">Yesterday Low Temperature: <strong><?php echo $this->getWeather('Revelstoke')->getLowTemp(); ?> &deg;C</strong></div>
+            <div class="yesterday">Yesterday Precipitation: <strong><?php echo $this->getWeather('Revelstoke')->getPrecip(); ?> mm</strong></div>
+            <div class="yesterday">Record High Temp: <strong><?php echo $this->getWeather('Revelstoke')->getExtremeHigh(); ?></strong></div>
+            <div class="yesterday">Record Low Temp: <strong><?php echo $this->getWeather('Revelstoke')->getExtremeLow(); ?></strong></div>
+        </div>
+
+        <div class="filler"></div>
     </div>
 </div>
 
@@ -56,6 +85,8 @@
         <div class="col-lg-12">
             <img src="/img/latest.jpg?<?php echo time() ?>" width="1280" height="720" alt="live-webcam" id="webcam-latest" class="img-rounded img-responsive webcam"/>
         </div>
+
+        <div class="filler"></div>
     </div>
 </div>
 
@@ -74,6 +105,8 @@
                 <?php endfor; ?>
             </div>
         </div>
+
+        <div class="filler"></div>
     </div>
 </div>
 
@@ -83,5 +116,7 @@
             <h2>WEATHER MAP</h2>
             <div id="map-container" class="map-container"></div>
         </div>
+
+        <div class="filler"></div>
     </div>
 </div>

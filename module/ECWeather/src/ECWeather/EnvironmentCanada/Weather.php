@@ -68,21 +68,6 @@ class Weather {
     private $forecastAbbreviatedTextSummary;
 
     /**
-     * The sunrise for that day
-     *
-     * @var string $sunrise
-     */
-    private $sunrise;
-
-    /**
-     * The sunset for that day
-     *
-     * @var string $sunset
-     */
-    private $sunset;
-
-
-    /**
      * Setter for Environment Canada's service API URL
      *
      * @param string $url
@@ -209,42 +194,159 @@ class Weather {
         $visibility = $currentConditions->visibility;
         $currentIconCode = $currentConditions->iconCode;
         $forecastGroup = $xml->forecastGroup->forecast;
+        $forecastArray = $this->convertForecastObject($forecastGroup);
         $sunrise = $xml->riseSet->dateTime[1]->hour . ':' . $xml->riseSet->dateTime[1]->minute;
         $sunset = $xml->riseSet->dateTime[3]->hour . ':' . $xml->riseSet->dateTime[3]->minute;
-
-        foreach($forecastGroup as $key => $forecastDay) {
-            $this->forecastPeriod[] = $forecastDay->period['textForecastName'];
-            $this->forecastTextSummary[] = $forecastDay->textSummary;
-            $this->forecastIconCode[] = $forecastDay->abbreviatedForecast->iconCode;
-            $this->forecastAbbreviatedTextSummary[] = $forecastDay->abbreviatedForecast->textSummary;
-        }
-
-        $forecastArray = array();
-        $count = 0;
-        foreach($this->forecastPeriod as $data) {
-            $forecastArray[] = array(
-                'forecastPeriod'        => $this->forecastPeriod[$count],
-                'forecastTextSummary'   => $this->forecastTextSummary[$count],
-                'forecastIconCode'      => $this->forecastIconCode[$count],
-                'abbreviatedTextSummary'=> $this->forecastAbbreviatedTextSummary[$count]
-            );
-            $count++;
-        }
+        $temperature = $currentConditions->temperature;
+        $dewpoint = $currentConditions->dewpoint;
+        $relativeHumidity = $currentConditions->relativeHumidity;
+        $wind = $currentConditions->wind;
+        $speed = $wind->speed;
+        $direction = $wind->direction;
+        $pressure = $currentConditions->pressure;
+        $yesterday = $xml->yesterdayConditions;
+        $highTemp = $yesterday->temperature[0];
+        $lowTemp = $yesterday->temperature[1];
+        $precip = $yesterday->precip;
+        $almanac = $xml->almanac;
+        $extremeHighTemp = $almanac->temperature[0] . "&deg;C in " . $almanac->temperature[0]['year'];
+        $extremeLowTemp = $almanac->temperature[1] . "&deg;C in " . $almanac->temperature[1]['year'];
 
         $forecast = array(
-            'location'      => $location,
-            'condition'     => $condition,
-            'dateTime'      => $dateTime,
-            'visibility'    => $visibility,
-            'iconCode'      => $currentIconCode,
-            'forecast'      => $forecastArray,
-            'sunrise'       => $sunrise,
-            'sunset'        => $sunset,
+            'location'          => $location,
+            'condition'         => $condition,
+            'dateTime'          => $dateTime,
+            'visibility'        => $visibility,
+            'iconCode'          => $currentIconCode,
+            'forecast'          => $forecastArray,
+            'sunrise'           => $sunrise,
+            'sunset'            => $sunset,
+            'temperature'       => $temperature,
+            'dewpoint'          => $dewpoint,
+            'relativeHumidity'  => $relativeHumidity,
+            'speed'             => $speed,
+            'direction'         => $direction,
+            'pressure'          => $pressure,
+            'highTemp'          => $highTemp,
+            'lowTemp'           => $lowTemp,
+            'precip'            => $precip,
+            'extremeHigh'       => $extremeHighTemp,
+            'extremeLow'        => $extremeLowTemp,
         );
 
         $this->setForecast($forecast);
 
         return $this;
+    }
+
+    /**
+     * Get record low temp
+     *
+     * @return string extremeLow
+     */
+    public function getExtremeLow() {
+        $forecast = $this->getForecast();
+        return $forecast['extremeLow'];
+    }
+
+    /**
+     * Get record high temp
+     *
+     * @return string extremeHigh
+     */
+    public function getExtremeHigh() {
+        $forecast = $this->getForecast();
+        return $forecast['extremeHigh'];
+    }
+
+    /**
+     * Get yesterday precip
+     *
+     * @return string precip
+     */
+    public function getPrecip() {
+        $forecast = $this->getForecast();
+        return $forecast['precip'];
+    }
+
+    /**
+     * Get yesterday low temp
+     *
+     * @return string pressure
+     */
+    public function getLowTemp() {
+        $forecast = $this->getForecast();
+        return $forecast['lowTemp'];
+    }
+
+    /**
+     * Get yesterday high temp
+     *
+     * @return string high temp
+     */
+    public function getHighTemp() {
+        $forecast = $this->getForecast();
+        return $forecast['highTemp'];
+    }
+
+    /**
+     * Get the current conditions barometric pressure
+     *
+     * @return string pressure
+     */
+    public function getPressure() {
+        $forecast = $this->getForecast();
+        return $forecast['pressure'];
+    }
+
+    /**
+     * Get the current conditions direction
+     *
+     * @return string direction
+     */
+    public function getDirection() {
+        $forecast = $this->getForecast();
+        return $forecast['direction'];
+    }
+
+    /**
+     * Get the speed
+     *
+     * @return string speed
+     */
+    public function getSpeed() {
+        $forecast = $this->getForecast();
+        return $forecast['speed'];
+    }
+
+    /**
+     * Get the dewpoint
+     *
+     * @return string dewpoint
+     */
+    public function getDewpoint() {
+        $forecast = $this->getForecast();
+        return $forecast['dewpoint'];
+    }
+
+    /**
+     * Get the current conditions relative humidity
+     *
+     * @return string relativeHumidity
+     */
+    public function getRelativeHumidity() {
+        $forecast = $this->getForecast();
+        return $forecast['relativeHumidity'];
+    }
+
+    /**
+     * Get the current conditions temperature
+     *
+     * @return string temperature
+     */
+    public function getTemperature() {
+        $forecast = $this->getForecast();
+        return $forecast['temperature'];
     }
 
     /**
@@ -358,5 +460,36 @@ class Weather {
     public function getDateTime() {
         $forecast = $this->getForecast();
         return $forecast['dateTime'];
+    }
+
+    /**
+     * Convert forecastGroup xml object into multi dimensional array
+     *
+     * @param $forecastGroup
+     * @return array $forecastArray
+     */
+    private function convertForecastObject($forecastGroup) {
+
+        foreach($forecastGroup as $key => $forecastDay) {
+            $this->forecastPeriod[] = $forecastDay->period['textForecastName'];
+            $this->forecastTextSummary[] = $forecastDay->textSummary;
+            $this->forecastIconCode[] = $forecastDay->abbreviatedForecast->iconCode;
+            $this->forecastAbbreviatedTextSummary[] = $forecastDay->abbreviatedForecast->textSummary;
+        }
+
+        $forecastArray = array();
+        $count = 0;
+
+        foreach($this->forecastPeriod as $data) {
+            $forecastArray[] = array(
+                'forecastPeriod'        => $this->forecastPeriod[$count],
+                'forecastTextSummary'   => $this->forecastTextSummary[$count],
+                'forecastIconCode'      => $this->forecastIconCode[$count],
+                'abbreviatedTextSummary'=> $this->forecastAbbreviatedTextSummary[$count]
+            );
+            $count++;
+        }
+
+        return $forecastArray;
     }
 }
