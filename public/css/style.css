@@ -29,6 +29,8 @@ body {
     background: #333;
 }
 
+.timelapse { background: url('../img/bg/mooning.png') repeat; }
+
 .modal-header {
     border-bottom: none;
 }
