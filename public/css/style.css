@@ -6,7 +6,7 @@ body {
 
 .margin-top-40 { margin-top: 40px; }
 
-.right-now, .live-webcam, .forecast, .map {
+.right-now, .live-webcam, .forecast, .map, .timelapse {
     padding: 20px 0 100px 0;
 }
 
@@ -27,6 +27,40 @@ body {
 
 .map {
     background: #333;
+}
+
+.modal-header {
+    border-bottom: none;
+}
+
+.modal-header .close {
+    color: #eee;
+}
+
+.modal-content {
+    background: #222;
+}
+
+h4.modal-title {
+    color: #eee;
+}
+.modal-dialog {
+    width:95%;
+}
+.video-wrapper {
+    width:100% !important;
+    height: auto !important;
+    max-width: 1280px;
+    margin:0 auto;
+}
+.video-wrapper video {
+    max-width: 1280px;
+    width: 100% !important;
+    height: auto !important;
+}
+
+.modal-footer {
+    border-top: none;
 }
 
 

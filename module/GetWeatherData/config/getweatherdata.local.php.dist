@@ -1,0 +1,6 @@
+<?php
+return array(
+    'getweatherdata' => array(
+        'key' => 'SECRET_KEY_TO_SEND_TO_SELKIRK_SERVER',
+    )
+);

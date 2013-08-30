@@ -7,13 +7,15 @@
  */
 return array(
     'modules' => array(
-        //'ZendDeveloperTools',
+        'ZendDeveloperTools',
         'DoctrineModule',
         'DoctrineORMModule',
         'GetWeatherData',
         'Application',
         'ECWeather',
-        'DkcwdZf2Munee'
+        'DkcwdZf2Munee',
+        'Aws',
+        'AwsExtensions'
         ),
     'module_listener_options' => array(
         'module_paths' => array(
@@ -21,23 +23,10 @@ return array(
             './vendor'
             ),
         'config_glob_paths' => array('config/autoload/{,*.}{global,local}.php'),
-
-        // Whether or not to enable a configuration cache.
-        // If enabled, the merged configuration will be cached and used in
-        // subsequent requests.
         'config_cache_enabled' => false,
-        // The key used to create the configuration cache file name.
-        'config_cache_key' => "eZN71Qxu6gUWxWCxHOkZbuYMT6jCqsbL",
-
-        // Whether or not to enable a module class map cache.
-        // If enabled, creates a module class map cache which will be used
-        // by in future requests, to reduce the autoloading process.
+        'config_cache_key' => 'eZN71Qxu6gUWxWCxHOkZbuYMT6jCqsbL',
         'module_map_cache_enabled' => false,
-        // The key used to create the class map cache file name.
-        'module_map_cache_key' => "95af3ux5b11rQRVvIxpQZQ3i3h2PX70d",
-
-
-        // The path in which to cache merged configuration.
-        'cache_dir' => "./data/cache/modulecache",
+        'module_map_cache_key' => '95af3ux5b11rQRVvIxpQZQ3i3h2PX70d',
+        'cache_dir' => './data/cache/modulecache'
         )
     );
