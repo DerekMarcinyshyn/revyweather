@@ -6,7 +6,7 @@ body {
 
 .margin-top-40 { margin-top: 40px; }
 
-.right-now, .live-webcam, .forecast, .map, .timelapse {
+.right-now, .live-webcam, .forecast, .map, .timelapse, .history {
     padding: 20px 0 100px 0;
 }
 

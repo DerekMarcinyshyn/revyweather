@@ -1,29 +1,23 @@
 <?php
 /**
- * Factory method for AwsExtension Service
+ * Factory method for History Charts Service
  *
  * @author  Derek Marcinyshyn <derek@marcinyshyn.com>
  * @date    August 30, 2013
  */
 
-namespace AwsExtensions\Service;
+namespace HistoryCharts\Service;
 
 use Zend\ServiceManager\FactoryInterface,
     Zend\ServiceManager\ServiceLocatorInterface,
-    AwsExtensions\View\Helper\S3Iterator;
+    HistoryCharts\View\Helper\Charts;
 
 class Factory implements FactoryInterface {
 
-    /**
-     * Factory used to instantiate a S3 Iterator
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return S3Iterator|mixed
-     */
     public function createService(ServiceLocatorInterface $serviceLocator) {
         $parentLocator = $serviceLocator->getServiceLocator();
-        $s3Client = $parentLocator->get('Aws')->get('S3');
+        $entityManager = $parentLocator->get('Doctrine\ORM\EntityManager');
 
-        return new S3Iterator($s3Client);
+        return new Charts($entityManager);
     }
 }

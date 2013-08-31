@@ -3,7 +3,7 @@
  * @author      Derek Marcinyshyn <derek@marcinyshyn.com>
  * @date        July 31, 2013
  */
-$(document).ready(function() {
+jQuery(document).ready(function($) {
     var interval = 10000; // number of milliseconds to refresh
 
     var g = new JustGage({
@@ -123,4 +123,25 @@ $(document).ready(function() {
     map.addLayers([gmap, layer_cloud, layer_precipitation, pressure_contour]);
     map.addControl(new OpenLayers.Control.LayerSwitcher());
     map.setCenter(lonlat, zoom);
+
+    // History date range selector
+    $('input[id="daterange"]').daterangepicker({
+        format: 'YYYY-MM-DD',
+        minDate: '2013-08-23',
+        maxDate: moment(),
+        ranges: {
+            'Today': [moment(), moment()],
+            'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
+            'Last 7 Days': [moment().subtract('days', 6), moment()],
+            'Last 30 Days': [moment().subtract('days', 29), moment()],
+            'This Month': [moment().startOf('month'), moment().endOf('month')],
+            'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
+        },
+        startDate: moment().subtract('days', 29),
+        endDate: moment()
+        },
+        function(start, end) {
+            console.log('Date range: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+        }
+    );
 });

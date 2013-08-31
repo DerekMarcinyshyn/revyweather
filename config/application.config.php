@@ -15,7 +15,8 @@ return array(
         'ECWeather',
         'DkcwdZf2Munee',
         'Aws',
-        'AwsExtensions'
+        'AwsExtensions',
+        'HistoryCharts'
         ),
     'module_listener_options' => array(
         'module_paths' => array(

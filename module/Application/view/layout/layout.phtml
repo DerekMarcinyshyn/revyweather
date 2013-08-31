@@ -12,7 +12,7 @@
               //          ->prependStylesheet($this->basePath() . '/css/style.css')
               //          ->prependStylesheet($this->basePath() . '/css/bootstrap-blue-sky.min.css') ?>
 
-        <?php echo $this->muneeCss(array('/css/bootstrap-blue-sky.min.css', '/css/style.css'), true); ?>
+        <?php echo $this->muneeCss(array('/css/bootstrap-blue-sky.min.css', '/css/daterangepicker-bs3.css', '/css/style.css'), true); ?>
 
         <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 
@@ -25,7 +25,10 @@
             '/js/jquery.scrollto.js',
             '/js/jquery.nav.js',
             '/js/nav.js',
-            '/js/jquery.scrollToTop.min.js'
+            '/js/jquery.scrollToTop.min.js',
+            '/js/highcharts/highcharts.js',
+            '/js/moment.min.js',
+            '/js/daterangepicker.js'
         ), true); ?>
         <script src="http://openlayers.org/api/OpenLayers.js"></script>
         <script src="http://maps.google.com/maps/api/js?v=3&amp;sensor=false"></script>
@@ -60,6 +63,7 @@
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul id="nav" class="nav navbar-nav">
                         <li class="active"><a href="#right-now">Right Now</a></li>
+                        <li><a href="#history">History</a></li>
                         <li><a href="#live-webcam">Live Webcam</a></li>
                         <li><a href="#forecast">Forecast</a></li>
                         <li><a href="#map">Map</a></li>
