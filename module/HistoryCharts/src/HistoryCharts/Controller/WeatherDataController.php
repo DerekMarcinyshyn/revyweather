@@ -13,6 +13,7 @@ namespace HistoryCharts\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController,
     Zend\View\Model\ViewModel,
+    Zend\View\Model\JsonModel,
     Doctrine\Orm\QueryBuilder;
 
 class WeatherDataController extends AbstractActionController {
@@ -20,28 +21,40 @@ class WeatherDataController extends AbstractActionController {
     public function lastweekAction() {
 
         $entityManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
-        //$repository = $entityManager->getRepository('GetWeatherData\Entity\Weather');
 
-        //$weatherData = $entityManager->createQueryBuilder('GetWeatherData\Entity\Weather')
-        //    ->getQuery()
-        //    ->execute();
-
-        $query = $entityManager->createQuery('SELECT u FROM GetWeatherData\Entity\Weather u WHERE u.timestamp BETWEEN CURRENT_TIMESTAMP() - 6048000 AND CURRENT_TIMESTAMP()');
+        $query = $entityManager->createQuery('SELECT wx FROM GetWeatherData\Entity\Weather wx WHERE wx.timestamp BETWEEN CURRENT_TIMESTAMP() - 6048000 AND CURRENT_TIMESTAMP()');
         $weatherData = $query->getResult();
+
+        $temperatureResult = array();
+        $barometerResult = array();
+        $relativeHumidityResult = array();
 
         foreach($weatherData as $weather) {
 
-            echo $weather->getTimestamp()->format('Y-m-d H:i:s') . "<br/>" ;
+            $milliseconds = $weather->getTimestamp()->format('U') * 1000;
 
+            $temperature = intval($weather->getBmp_temperature());
+            $temperatureResult[] = array($milliseconds, $temperature);
+
+            $barometer = intval($weather->getBarometer());
+            $barometerResult[] = array($milliseconds, $barometer);
+
+            $relativeHumidity = intval($weather->getRelativehumidity());
+            $relativeHumidityResult[] = array($milliseconds, $relativeHumidity);
         }
 
+        $temperatureResult = array('name' => 'Air Temp', 'data' => $temperatureResult);
+        $barometerResult = array('name' => 'Barometer', 'data' => $barometerResult);
+        $relativeHumidityResult = array('name' => 'Relative Humidity', 'data' => $relativeHumidityResult);
 
-        //$weatherData = $entityManager->getRepository('GetWeatherData\Entity\Weather')
-        //    ->findBy($criteria, array('id' => 'ASC', 200, 0));
+        $wxResult = array();
+        array_push($wxResult, $temperatureResult);
+        array_push($wxResult, $barometerResult);
+        array_push($wxResult, $relativeHumidityResult);
 
-        //print_r($weatherData);
+        $result = new JsonModel($wxResult);
 
-        return true;
+        return $result;
     }
 
 
