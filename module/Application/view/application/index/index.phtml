@@ -9,7 +9,7 @@
 
 <?php $this->headScript()->offsetSetFile(100, '/js/weather.js'); ?>
 
-<div id="right-now" class="right-now">
+<section id="right-now" class="right-now">
     <div class="container">
         <div class="col-lg-12 right-now-time margin-top-40">
             <h2>RIGHT NOW</h2>
@@ -74,10 +74,10 @@
 
         <div class="filler"></div>
     </div>
-</div>
+</section>
 
 
-<div id="history" class="history">
+<section id="history" class="history">
     <div class="container">
         <div class="col-lg-12">
             <h2>HISTORICAL WEATHER</h2>
@@ -91,20 +91,20 @@
                 </span>
             </div>
         </div>
+
         <div class="clearfix"></div>
-        <div class="col-lg-12">
-            <?php //echo $this->historyData() ?>
-        </div>
+
+        <div id="high-charts-container" class="col-lg-12 high-charts-container"></div>
 
         <div class="filler"></div>
         <div class="filler"></div>
         <div class="filler"></div>
         <div class="filler"></div>
     </div>
-</div>
+</section>
 
 
-<div id="live-webcam" class="live-webcam">
+<section id="live-webcam" class="live-webcam">
     <div class="container">
         <div class="col-lg-12">
             <h2>LIVE WEBCAM</h2>
@@ -116,9 +116,9 @@
 
         <div class="filler"></div>
     </div>
-</div>
+</section>
 
-<div id="forecast" class="forecast">
+<section id="forecast" class="forecast">
     <div class="container">
         <div class="col-lg-12">
             <h2>FORECAST</h2>
@@ -136,9 +136,9 @@
 
         <div class="filler"></div>
     </div>
-</div>
+</section>
 
-<div id="map" class="map">
+<section id="map" class="map">
     <div class="container">
         <div class="col-lg-12">
             <h2>WEATHER MAP</h2>
@@ -147,9 +147,9 @@
 
         <div class="filler"></div>
     </div>
-</div>
+</section>
 
-<div id="timelapse" class="timelapse">
+<section id="timelapse" class="timelapse">
     <div class="container">
         <h2>TIMELAPSE VIDEOS</h2>
         <div class="timelapse-container">
@@ -194,4 +194,4 @@
         <div class="filler"></div>
         <div class="filler"></div>
     </div>
-</div>
+</section>

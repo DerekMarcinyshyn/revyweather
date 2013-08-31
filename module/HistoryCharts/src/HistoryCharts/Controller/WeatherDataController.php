@@ -28,6 +28,7 @@ class WeatherDataController extends AbstractActionController {
         $temperatureResult = array();
         $barometerResult = array();
         $relativeHumidityResult = array();
+        $speedResult = array();
 
         foreach($weatherData as $weather) {
 
@@ -41,16 +42,21 @@ class WeatherDataController extends AbstractActionController {
 
             $relativeHumidity = intval($weather->getRelativehumidity());
             $relativeHumidityResult[] = array($milliseconds, $relativeHumidity);
+
+            $speed = intval($weather->getSpeed() * 1.60934);
+            $speedResult[] = array($milliseconds, $speed);
         }
 
         $temperatureResult = array('name' => 'Air Temp', 'data' => $temperatureResult);
         $barometerResult = array('name' => 'Barometer', 'data' => $barometerResult);
         $relativeHumidityResult = array('name' => 'Relative Humidity', 'data' => $relativeHumidityResult);
+        $speedResult = array('name' => 'Wind Speed', 'data' => $speedResult);
 
         $wxResult = array();
         array_push($wxResult, $temperatureResult);
         array_push($wxResult, $barometerResult);
         array_push($wxResult, $relativeHumidityResult);
+        array_push($wxResult, $speedResult);
 
         $result = new JsonModel($wxResult);
 

@@ -19,10 +19,14 @@ body {
 
 .filler {width:100%; height:420px;}
 
-.forecast { background: url('../img/bg/brickwall.png') repeat; }
+.forecast { background: #f9f9f9; }
 .forecast-period {
     padding-bottom: 20px;
     border-bottom: 1px solid #ccc;
+}
+
+.high-charts-container {
+    margin-top: 30px;
 }
 
 .map {

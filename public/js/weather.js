@@ -144,4 +144,65 @@ jQuery(document).ready(function($) {
             console.log('Date range: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
         }
     );
+
+    // High Charts
+    var chart;
+
+    Highcharts.setOptions({
+        global: {
+            useUTC: false
+        }
+    });
+
+    var options = {
+        chart: {
+            renderTo:   'high-charts-container',
+            type:       'line',
+            zoomType:   'x'
+        },
+
+        title: {
+            text:       'Courthouse Area Historical Weather'
+        },
+
+        xAxis: {
+            type:       'datetime',
+            dateTimeLabelFormat: {
+                hour: '%d %H:%M'
+            },
+            tickPixelInterval: 150,
+            minRange:   1
+        },
+
+        yAxis: {
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+
+        legend: {
+            layout:         'vertical',
+            align:          'right',
+            verticalAlign:  'top',
+            x:              -10,
+            y:              100,
+            borderWidth:    0
+        },
+
+        credits: {
+            href:           'http://monasheemountainmultimedia.com',
+            text:           'MMM'
+        },
+
+        series: []
+    };
+
+    $.getJSON('lastweek', function(data) {
+        options.series = data;
+
+        var chart = new Highcharts.Chart(options);
+    });
+
 });
