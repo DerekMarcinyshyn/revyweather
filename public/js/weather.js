@@ -130,18 +130,16 @@ jQuery(document).ready(function($) {
         minDate: '2013-08-23',
         maxDate: moment(),
         ranges: {
-            'Today': [moment(), moment()],
-            'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
+            'Last 24 Hours': [moment().subtract('days', 1), moment()],
             'Last 7 Days': [moment().subtract('days', 6), moment()],
             'Last 30 Days': [moment().subtract('days', 29), moment()],
-            'This Month': [moment().startOf('month'), moment().endOf('month')],
-            'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
         },
         startDate: moment().subtract('days', 29),
         endDate: moment()
         },
         function(start, end) {
             console.log('Date range: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+            // send request to render new chart
         }
     );
 
@@ -156,9 +154,9 @@ jQuery(document).ready(function($) {
 
     var options = {
         chart: {
-            renderTo:   'high-charts-container',
-            type:       'line',
-            zoomType:   'x'
+            renderTo:           'high-charts-container',
+            zoomType:           'xy',
+            backgroundColor:    '#F9F9F9'
         },
 
         title: {
@@ -168,27 +166,92 @@ jQuery(document).ready(function($) {
         xAxis: {
             type:       'datetime',
             dateTimeLabelFormat: {
-                hour: '%d %H:%M'
+                hour: '%m %d %H:%M'
             },
             tickPixelInterval: 150,
             minRange:   1
         },
 
-        yAxis: {
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }]
-        },
+        yAxis: [{
+            gridLineWidth: 0,
+            labels: {
+                style: {
+                    color: '#B26969'
+                },
+                format: '{value} °C'
+            },
+            title: {
+                text: 'Temperature',
+                style: {
+                    color: '#B26969'
+                }
+            }
+        }, {
+            gridLineWidth: 0,
+            title: {
+                text: 'Rainfall',
+                style: {
+                    color: '#C7D1ED'
+                }
+            },
+            labels: {
+                format: '{value} mm',
+                style: {
+                    color: '#C7D1ED'
+                }
+            },
+            opposite: true
+        }, {
+            gridLineWidth: 0,
+            title: {
+                text: 'Barometric Pressure',
+                style: {
+                    color: '#499999'
+                }
+            },
+            labels: {
+                format: '{value} kPa',
+                style: {
+                    color: '#499999'
+                }
+            },
+            opposite: true
+        }, {
+            gridLineWidth: 0,
+            title: 'Wind Speed',
+            style: {
+                color: '#7EbA86'
+            },
+            labels: {
+                format: '{value} kmh',
+                style: {
+                    color: '#7EbA86'
+                }
+            },
+            opposite: true
+        }, {
+            gridLineWidth: 0,
+            title: 'Relative Humidity',
+            style: {
+                color: '#B79468'
+            },
+            labels: {
+                format: '{value} %',
+                style: {
+                    color: '#B79468'
+                }
+            }
+        }],
 
         legend: {
-            layout:         'vertical',
-            align:          'right',
-            verticalAlign:  'top',
-            x:              -10,
-            y:              100,
-            borderWidth:    0
+            layout:             'vertical',
+            align:              'left',
+            verticalAlign:      'top',
+            x:                  200,
+            y:                  50,
+            borderWidth:        1,
+            floating:           true,
+            backgroundColor:    '#FFFFFF'
         },
 
         credits: {
