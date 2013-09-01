@@ -22,6 +22,17 @@ return array(
                     ),
                 ),
             ),
+            'getcustomdates' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route' => '/getcustomdates',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'HistoryCharts\Controller',
+                        'controller'    => 'WeatherData',
+                        'action'        => 'getcustomdates',
+                    ),
+                ),
+            ),
         ),
     ),
 

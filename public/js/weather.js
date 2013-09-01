@@ -132,14 +132,20 @@ jQuery(document).ready(function($) {
         ranges: {
             'Last 24 Hours': [moment().subtract('days', 1), moment()],
             'Last 7 Days': [moment().subtract('days', 6), moment()],
-            'Last 30 Days': [moment().subtract('days', 29), moment()],
+            'Last 30 Days': [moment().subtract('days', 29), moment()]
         },
         startDate: moment().subtract('days', 29),
         endDate: moment()
         },
         function(start, end) {
-            console.log('Date range: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+            //console.log('Date range: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
             // send request to render new chart
+            $.post('/getcustomdates', { startDate: start.format('YYYYMMDD'), endDate: end.format('YYYYMMDD')},
+                function(data) {
+                    //console.log(data);
+                    options.series = data;
+                    var chart = new Highcharts.Chart(options);
+                }, "json");
         }
     );
 

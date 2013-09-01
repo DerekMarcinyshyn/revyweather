@@ -14,9 +14,27 @@ namespace HistoryCharts\Controller;
 use Zend\Mvc\Controller\AbstractActionController,
     Zend\View\Model\ViewModel,
     Zend\View\Model\JsonModel,
-    Doctrine\Orm\QueryBuilder;
+    Zend\Http\Request,
+    Doctrine\Orm\QueryBuilder,
+    HistoryCharts\Service\DateFunction;
 
 class WeatherDataController extends AbstractActionController {
+
+    /**
+     * Get from Historical Weather section a date range
+     * and return the weather json set
+     *
+     * @return JsonModel
+     */
+    public function getcustomdatesAction() {
+
+        $startDate = $this->getRequest()->getPost('startDate');
+        $endDate = $this->getRequest()->getPost('endDate');
+
+        $json = $this->buildJson($startDate, $endDate);
+
+        return $json;
+    }
 
     /**
      * Default Historical Weather High Charts
