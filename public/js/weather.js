@@ -268,10 +268,14 @@ jQuery(document).ready(function($) {
         series: []
     };
 
-    $.getJSON('lastweek', function(data) {
-        options.series = data;
+    var lastweek = moment().subtract('days', 6);
+    var rightnow = moment();
 
-        var chart = new Highcharts.Chart(options);
-    });
+    $.post('/getcustomdates', { startDate: lastweek.format('YYYYMMDD'), endDate: rightnow.format('YYYYMMDD')},
+        function(data) {
+            //console.log(data);
+            options.series = data;
+            var chart = new Highcharts.Chart(options);
+        }, "json");
 
 });

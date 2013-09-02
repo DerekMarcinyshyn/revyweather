@@ -12,11 +12,9 @@
 namespace HistoryCharts\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController,
-    Zend\View\Model\ViewModel,
     Zend\View\Model\JsonModel,
     Zend\Http\Request,
-    Doctrine\Orm\QueryBuilder,
-    HistoryCharts\Service\DateFunction;
+    Doctrine\Orm\QueryBuilder;
 
 class WeatherDataController extends AbstractActionController {
 
@@ -28,28 +26,18 @@ class WeatherDataController extends AbstractActionController {
      */
     public function getcustomdatesAction() {
 
-        $startDate = $this->getRequest()->getPost('startDate');
-        $endDate = $this->getRequest()->getPost('endDate');
+        $request = $this->getRequest();
 
-        $json = $this->buildJson($startDate, $endDate);
+        if ($request->isPost()) {
+            $startDate = $this->getRequest()->getPost('startDate');
+            $endDate = $this->getRequest()->getPost('endDate');
 
-        return $json;
-    }
+            $json = $this->buildJson($startDate, $endDate);
 
-    /**
-     * Default Historical Weather High Charts
-     *
-     * @return JsonModel
-     */
-    public function lastweekAction() {
-
-        $currentTimestamp = 'CURRENT_TIMESTAMP()';
-        $endDate = $currentTimestamp;
-        $startDate = $currentTimestamp - 6048000;
-
-        $json = $this->buildJson($startDate, $endDate);
-
-        return $json;
+            return $json;
+        } else {
+            return $this->redirect()->toRoute('home');
+        }
     }
 
     /**

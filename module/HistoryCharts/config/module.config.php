@@ -11,17 +11,6 @@ return array(
 
     'router' => array(
         'routes' => array(
-            'lastweek' => array(
-                'type' => 'Zend\Mvc\Router\Http\Literal',
-                'options' => array(
-                    'route' => '/lastweek',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'HistoryCharts\Controller',
-                        'controller'    => 'WeatherData',
-                        'action'        => 'lastweek',
-                    ),
-                ),
-            ),
             'getcustomdates' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
@@ -37,7 +26,7 @@ return array(
     ),
 
     'view_manager' => array(
-        'strategies'                    => array('ViewJsonStrategy'),
+        'strategies' => array('ViewJsonStrategy'),
     ),
 
     'view_helpers' => array(
