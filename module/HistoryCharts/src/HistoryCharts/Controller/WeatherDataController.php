@@ -121,7 +121,8 @@ class WeatherDataController extends AbstractActionController {
             ),
             'yAxis'     => 2,
             'color'     => '#499999',
-            'dashStyle' => 'shortdot'
+            'dashStyle' => 'solid',
+            'shadow'    => true
         );
 
         $relativeHumidityResult = array(

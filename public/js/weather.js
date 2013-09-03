@@ -154,7 +154,7 @@ jQuery(document).ready(function($) {
         },
 
         yAxis: [{
-            gridLineWidth: 0,
+            gridLineWidth: 1,
             labels: {
                 style: {
                     color: '#B26969'
@@ -228,8 +228,8 @@ jQuery(document).ready(function($) {
             layout:             'vertical',
             align:              'left',
             verticalAlign:      'top',
-            x:                  200,
-            y:                  50,
+            x:                  80,
+            y:                  20,
             borderWidth:        1,
             floating:           true,
             backgroundColor:    '#FFFFFF'
@@ -243,19 +243,19 @@ jQuery(document).ready(function($) {
         series: []
     };
 
+    // get the last week data
     var lastweek = moment().subtract('days', 6);
     var rightnow = moment();
 
-    $.post('/getcustomdates', { startDate: lastweek.format('YYYYMMDD'), endDate: rightnow.format('YYYYMMDDHmmss')},
+    $.post('/getcustomdates', { startDate: lastweek.format('YYYYMMDDHHmmss'), endDate: rightnow.format('YYYYMMDDHHmmss')},
         function(data) {
-            //console.log(data);
             options.series = data;
             var chart = new Highcharts.Chart(options);
         }, "json");
 
     // History date range selector
     $('input[id="daterange"]').daterangepicker({
-            format: 'YYYY-MM-DD H:mm:ss',
+            format: 'YYYY-MM-DD',
             minDate: '2013-08-23 01:00:02',
             maxDate: moment(),
             timePicker: true,
@@ -269,11 +269,10 @@ jQuery(document).ready(function($) {
         },
 
         function(start, end) {
-            //console.log('Date range: ' + start.format('YYYYMMDDHmmss') + ' to ' + end.format('YYYYMMDDHmmss'));
+            //console.log('Date range: ' + start.format('YYYYMMDDhhmmss') + ' to ' + end.format('YYYYMMDDHHms'));
             // send request to render new chart
-            $.post('/getcustomdates', { startDate: start.format('YYYYMMDDHmmss'), endDate: end.format('YYYYMMDDHmmss')},
+            $.post('/getcustomdates', { startDate: start.format('YYYYMMDDHHmmss'), endDate: end.format('YYYYMMDDHHmmss')},
                 function(data) {
-                    //console.log(data);
                     options.series = data;
                     var chart = new Highcharts.Chart(options);
                 }, "json");
