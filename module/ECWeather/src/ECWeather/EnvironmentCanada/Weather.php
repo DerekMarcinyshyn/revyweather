@@ -172,8 +172,6 @@ class Weather {
 
     public function fetch() {
         $client = $this->getHttpClient();
-        //$params
-
         $response = NULL;
 
         try {

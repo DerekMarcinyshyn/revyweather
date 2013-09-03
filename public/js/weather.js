@@ -124,31 +124,6 @@ jQuery(document).ready(function($) {
     map.addControl(new OpenLayers.Control.LayerSwitcher());
     map.setCenter(lonlat, zoom);
 
-    // History date range selector
-    $('input[id="daterange"]').daterangepicker({
-        format: 'YYYY-MM-DD',
-        minDate: '2013-08-23',
-        maxDate: moment(),
-        ranges: {
-            'Last 24 Hours': [moment().subtract('days', 1), moment()],
-            'Last 7 Days': [moment().subtract('days', 6), moment()],
-            'Last 30 Days': [moment().subtract('days', 29), moment()]
-        },
-        startDate: moment().subtract('days', 29),
-        endDate: moment()
-        },
-        function(start, end) {
-            //console.log('Date range: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-            // send request to render new chart
-            $.post('/getcustomdates', { startDate: start.format('YYYYMMDD'), endDate: end.format('YYYYMMDD')},
-                function(data) {
-                    //console.log(data);
-                    options.series = data;
-                    var chart = new Highcharts.Chart(options);
-                }, "json");
-        }
-    );
-
     // High Charts
     var chart;
 
@@ -161,7 +136,7 @@ jQuery(document).ready(function($) {
     var options = {
         chart: {
             renderTo:           'high-charts-container',
-            zoomType:           'xy',
+            zoomType:           'x',
             backgroundColor:    '#F9F9F9'
         },
 
@@ -271,11 +246,38 @@ jQuery(document).ready(function($) {
     var lastweek = moment().subtract('days', 6);
     var rightnow = moment();
 
-    $.post('/getcustomdates', { startDate: lastweek.format('YYYYMMDD'), endDate: rightnow.format('YYYYMMDD')},
+    $.post('/getcustomdates', { startDate: lastweek.format('YYYYMMDD'), endDate: rightnow.format('YYYYMMDDHmmss')},
         function(data) {
             //console.log(data);
             options.series = data;
             var chart = new Highcharts.Chart(options);
         }, "json");
+
+    // History date range selector
+    $('input[id="daterange"]').daterangepicker({
+            format: 'YYYY-MM-DD H:mm:ss',
+            minDate: '2013-08-23 01:00:02',
+            maxDate: moment(),
+            timePicker: true,
+            ranges: {
+                'Last 24 Hours': [moment().subtract('days', 1), moment()],
+                'Last 7 Days': [moment().subtract('days', 6), moment()],
+                'Last 30 Days': [moment().subtract('days', 29), moment()]
+            },
+            startDate: '2013-08-23 01:30:00',
+            endDate: moment()
+        },
+
+        function(start, end) {
+            //console.log('Date range: ' + start.format('YYYYMMDDHmmss') + ' to ' + end.format('YYYYMMDDHmmss'));
+            // send request to render new chart
+            $.post('/getcustomdates', { startDate: start.format('YYYYMMDDHmmss'), endDate: end.format('YYYYMMDDHmmss')},
+                function(data) {
+                    //console.log(data);
+                    options.series = data;
+                    var chart = new Highcharts.Chart(options);
+                }, "json");
+        }
+    );
 
 });
