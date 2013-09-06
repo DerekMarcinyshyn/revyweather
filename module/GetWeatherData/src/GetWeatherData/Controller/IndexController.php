@@ -35,7 +35,7 @@ class IndexController extends AbstractActionController {
         $key = $getweatherdata['key'];
 
         // get weather data
-        $url = 'http://derek.is-a-rockstar.com/weather-station/data.php?key=' . $key;
+        $url = 'http://derek.is-a-rockstar.com:81/weather-station/data.php?key=' . $key;
         $json = $this->getJson($url);
 
         // get the json into an object
@@ -76,7 +76,7 @@ class IndexController extends AbstractActionController {
         $key = $getweatherdata['key'];
 
         // get weather data
-        $url = 'http://derek.is-a-rockstar.com/weather-station/data.php?key=' . $key;
+        $url = 'http://derek.is-a-rockstar.com:81/weather-station/data.php?key=' . $key;
         $json = $this->getJson($url);
 
         if (!empty($json)) {
@@ -105,7 +105,8 @@ class IndexController extends AbstractActionController {
             throw new \RuntimeException('You can only use this action from a console!');
         }
 
-        $url = 'http://derek.is-a-rockstar.com/weather-station/latest.jpg';
+        //$url = 'http://derek.is-a-rockstar.com/weather-station/latest.jpg';
+        $url = 'http://derek.is-a-rockstar.com:81/weather-station/latest.jpg';
         $image = file_get_contents($url);
 
         if ($image) {
