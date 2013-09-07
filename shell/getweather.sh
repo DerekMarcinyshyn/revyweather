@@ -2,7 +2,7 @@
 #
 # Get Weather from Netduino
 #
-while (sleep 10 && php /var/www/revyweather/public/index.php getweatherdata) &
+while (sleep 10 && /usr/local/zend/bin/php /usr/local/zend/var/apps/http/__default__/0/0.1/public/index.php getweatherdata) &
 do
     wait $!
 done

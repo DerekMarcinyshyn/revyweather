@@ -28,14 +28,4 @@ return array(
     'view_manager' => array(
         'strategies' => array('ViewJsonStrategy'),
     ),
-
-    'view_helpers' => array(
-        'factories' => array(
-            'HistoryCharts\View\Helper\Charts'  => 'HistoryCharts\Service\Factory',
-        ),
-
-        'aliases' => array(
-            'historydata'  => 'HistoryCharts\View\Helper\Charts'
-        ),
-    ),
 );
