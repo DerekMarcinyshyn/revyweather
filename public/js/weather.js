@@ -68,7 +68,7 @@ jQuery(document).ready(function($) {
 
     // get the latest webcam image
     var camInterval = 180000;
-    var src = '../img/latest.jpg';
+    var src = 'http://www.revyweather.com/img/latest.jpg';
     var refreshLatest = function(){
         $('#webcam-latest').attr('src', src);
     };
