@@ -20,7 +20,7 @@
 
         <div class="col-md-3">
             <div class="current-icon">
-                <img alt="<?php echo $this->getWeather('Revelstoke')->getCondition(); ?>" src="/img/wx/icons-large/<?php echo $this->getWeather('Revelstoke')->getIconCode(); ?>.png" height="120" width="120" />
+                <img alt="<?php echo $this->getWeather('Revelstoke')->getCondition(); ?>" src="/img/wx/icons-large/<?php echo $this->getWeather('Revelstoke')->getIconCode(); ?>.png" height="120" width="120" id="current-icon" />
             </div>
             <div id="temp" class="temp"></div>
         </div>
@@ -96,9 +96,6 @@
 
         <div id="high-charts-container" class="col-lg-12 high-charts-container"></div>
 
-        <div class="filler"></div>
-        <div class="filler"></div>
-        <div class="filler"></div>
         <div class="filler"></div>
     </div>
 </section>
@@ -190,8 +187,6 @@
             </div>
         </div>
 
-        <div class="filler"></div>
-        <div class="filler"></div>
         <div class="filler"></div>
     </div>
 </section>

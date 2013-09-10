@@ -30,7 +30,8 @@
             '/js/jquery.scrollToTop.min.js',
             '/js/highcharts/highcharts.js',
             '/js/moment.min.js',
-            '/js/daterangepicker.js'
+            '/js/daterangepicker.js',
+            '/js/favico-0.2.0.min.js'
         ), true); ?>
         <script src="http://openlayers.org/api/OpenLayers.js"></script>
         <script src="http://maps.google.com/maps/api/js?v=3&amp;sensor=false"></script>
@@ -70,7 +71,7 @@
                         <span class="icon-bar"></span>
                     </button>
 
-                    <a class="navbar-brand" href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Revy Weather') ?></a>
+                    <a class="navbar-brand" href="<?php echo $this->url('home') ?>"><img alt="Revy Weather" src="/img/revy-weather-brand.png" width="250" height="50" /></a>
                 </div>
 
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
@@ -89,12 +90,12 @@
         <div class="wrapper">
             <?php echo $this->content; ?>
 
-            <div class="container">
-                <hr>
-                <footer>
+            <footer>
+                <div class="container">
+                    <div class="filler"></div>
                     <p class="text-muted">&copy; <?php echo date('Y') ?> Monashee Mountain Multimedia. <?php echo $this->translate('All rights reserved.') ?></p>
-                </footer>
-            </div>
+                </div>
+            </footer>
 
         </div> <!-- .wrapper -->
         <?php echo $this->inlineScript() ?>

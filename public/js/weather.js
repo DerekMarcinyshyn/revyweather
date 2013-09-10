@@ -279,4 +279,8 @@ jQuery(document).ready(function($) {
         }
     );
 
+    // Favico
+    var favicon = new Favico();
+    var image = document.getElementById('current-icon');
+    favicon.image(image);
 });
