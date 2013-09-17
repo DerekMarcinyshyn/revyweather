@@ -3,8 +3,6 @@ namespace GetWeatherData\Controller;
 
 use Zend\Mvc\Controller\AbstractRestfulController;
 use Zend\View\Model\JsonModel;
-use Zend\Log\Logger;
-use Zend\Log\Writer\Stream;
 
 /**
  * Class RainfallController
@@ -20,7 +18,15 @@ use Zend\Log\Writer\Stream;
 
 class RainfallController extends AbstractRestfulController {
 
+    /**
+     * Create a Rainfall event
+     *
+     * @param mixed $data
+     * @return mixed|JsonModel
+     */
     public function create($data) {
+
+        $_public_key = "E661M6K52272K69m77473x12G2zK79";
 
         // get the json from the content
         $content = $this->getRequest()->getContent();
@@ -32,7 +38,6 @@ class RainfallController extends AbstractRestfulController {
         $timestamp = $content_decode->timestamp;
         $public_key = $content_decode->public_key;
         $nonce = $content_decode->nonce;
-        $_public_key = "E661M6K52272K69m77473x12G2zK79";
 
         // check if has public key
         if ($public_key === $_public_key) {
@@ -46,7 +51,7 @@ class RainfallController extends AbstractRestfulController {
             // check if the post came from netduino
             if ($_nonce === $nonce) {
 
-                $this->recordRainfallEvent($timestamp);
+                $this->recordRainfallEvent();
 
                 return new JsonModel(array('data' => 'Success'));
             } else {
@@ -61,14 +66,8 @@ class RainfallController extends AbstractRestfulController {
     /**
      * Record the rainfall event
      *
-     * @param $timestamp
      */
-    private function recordRainfallEvent($timestamp) {
-
-        $logger = new Logger;
-        $writer = new Stream('./data/logs/json.txt');
-        $logger->addWriter($writer);
-        $logger->log(Logger::INFO, 'Rainfall event happened at: ' . date('l, F j, Y g:i:s a', $timestamp));
+    private function recordRainfallEvent() {
 
         // create object manager and set the values to the columns
         $objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
