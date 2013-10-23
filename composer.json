@@ -15,6 +15,7 @@
         "bjyoungblood/bjy-profiler": "dev-master",
         "zendframework/zftool": "dev-master",
         "dkcwd/dkcwd-zf2-munee": "1.2.*",
-        "aws/aws-sdk-php-zf2": "1.0.*"
+        "aws/aws-sdk-php-zf2": "1.0.*",
+        "sclinternet/bm-calendar": "dev-master"
     }
 }

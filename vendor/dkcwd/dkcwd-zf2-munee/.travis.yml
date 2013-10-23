@@ -1,0 +1,26 @@
+language: php
+php:
+  - "5.4"
+  - "5.3"
+
+env: 
+  - ZF2_PATH=/home/travis/build/dkcwd/ZendSkeletonApplication/vendor/ZF2/library
+  
+before_script:
+  - cd ..
+  - git clone git://github.com/zendframework/ZendSkeletonApplication.git
+  - cd ZendSkeletonApplication
+  - git submodule update --init --recursive
+  - ls -a
+  - cp ../dkcwd-zf2-munee/test/composer.json ./
+  - curl -s http://getcomposer.org/installer | php
+  - php composer.phar install
+  - rm -rf vendor/dkcwd/dkcwd-zf2-munee
+  - cp -r ../dkcwd-zf2-munee vendor/dkcwd/
+  - rm config/application.config.php
+  - cp ../dkcwd-zf2-munee/test/test.application.config.php config/
+  - mv config/test.application.config.php config/application.config.php
+  
+script:
+  - cd ../dkcwd-zf2-munee/test/
+  - phpunit

@@ -283,4 +283,74 @@ jQuery(document).ready(function($) {
     var favicon = new Favico();
     var image = document.getElementById('current-icon');
     favicon.image(image);
+
+
+    var timelapseMonthPrevious;
+    var timelapseMonthNext;
+    var timelapseYearPrevious;
+    var timelapseYearNext;
+
+    // Timelapse video Calendar
+    function getCalendar(year, month) {
+        $.post('/getcalendar', {year: year, month: month}, function(data) {
+            $('#timelapse-calendar').html(data.data);
+        });
+
+        timelapseYearPrevious = parseInt(year, 10);
+        timelapseYearNext = parseInt(year, 10);
+
+        // set values on buttons
+        if (parseInt(month, 10) - 1 == 0) {
+            timelapseMonthPrevious = 12;
+        } else {
+            timelapseMonthPrevious = parseInt(month, 10) - 1;
+        }
+
+        if (parseInt(month, 10) + 1 == 13) {
+            timelapseMonthNext = 1;
+        } else {
+            timelapseMonthNext = parseInt(month, 10) + 1;
+        }
+
+        if (parseInt(month, 10) == 1) {
+            timelapseYearPrevious = parseInt(year, 10) - 1;
+        }
+
+        if (parseInt(month, 10) == 12) {
+            timelapseYearNext = parseInt(year, 10) + 1;
+        }
+
+        // set the button values
+        $('#timelapse-previous').val(timelapseMonthPrevious);
+        $('#timelapse-next').val(timelapseMonthNext);
+        $('#timelapse-year-previous').val(timelapseYearPrevious);
+        $('#timelapse-year-next').val(timelapseYearNext);
+
+        // set date range
+        if (month == rightnow.format('MM') && year == 2013) {
+            $('#timelapse-next').addClass('disabled');
+        } else {
+            $('#timelapse-next').removeClass('disabled');
+        }
+
+        if (parseInt(month, 10) == 8 && parseInt(year, 10) == 2013) {
+            $('#timelapse-previous').addClass('disabled');
+        } else {
+            $('#timelapse-previous').removeClass('disabled');
+        }
+    }
+
+    var year = parseInt(rightnow.format('YYYY'), 10);
+    var month = parseInt(rightnow.format('MM'), 10);
+    getCalendar(year, month);
+
+    // listen to months buttons
+    $('#timelapse-previous').click(function() {
+        getCalendar($('#timelapse-year-previous').val(), $('#timelapse-previous').val());
+    });
+
+    $('#timelapse-next').click(function() {
+        getCalendar($('#timelapse-year-next').val(), $('#timelapse-next').val());
+    });
+
 });

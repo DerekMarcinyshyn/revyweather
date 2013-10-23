@@ -7,7 +7,6 @@
  */
 return array(
     'modules' => array(
-        //'ZendDeveloperTools',
         'DoctrineModule',
         'DoctrineORMModule',
         'GetWeatherData',
@@ -16,7 +15,9 @@ return array(
         'DkcwdZf2Munee',
         'Aws',
         'AwsExtensions',
-        'HistoryCharts'
+        'HistoryCharts',
+        'BmCalendar',
+        'TimelapseVideos'
         ),
     'module_listener_options' => array(
         'module_paths' => array(
@@ -24,9 +25,9 @@ return array(
             './vendor'
             ),
         'config_glob_paths' => array('config/autoload/{,*.}{global,local}.php'),
-        'config_cache_enabled' => true,
+        'config_cache_enabled' => false,
         'config_cache_key' => 'eZN71Qxu6gUWxWCxHOkZbuYMT6jCqsbL',
-        'module_map_cache_enabled' => true,
+        'module_map_cache_enabled' => false,
         'module_map_cache_key' => '95af3ux5b11rQRVvIxpQZQ3i3h2PX70d',
         'cache_dir' => './data/cache/modulecache'
         )

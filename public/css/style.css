@@ -176,6 +176,9 @@ div.container a.brand {
     height: 800px;
 }
 
+.bm-calendar-month-title {font-size: 30px;}
+.bm-calendar {font-size: 18px;}
+.bm-calender th, .bm-calendar td {padding: 6px 16px;}
 
 footer {
     background: url(../img/bg/hixs_pattern_evolution.png) repeat;

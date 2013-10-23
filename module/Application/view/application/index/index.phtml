@@ -150,43 +150,15 @@
     <div class="container">
         <h2>TIMELAPSE VIDEOS</h2>
         <div class="timelapse-container">
-            <div class="list-group">
-                <?php $iterator = $this->bucketList('monashee-mountain-multimedia-timelapse'); ?>
-                <?php $count = 0; ?>
-                <?php foreach ($iterator as $object) : ?>
-                    <?php $split = explode("/", $object['Key']); ?>
-                    <?php $year = $split[0]; $month = $split[1];  $day = $split[2]; ?>
-                    <?php $video = $year . "/" . $month . "/" . $day . "/" . $month . "-" . $day; ?>
-                    <?php if ($count %2 == 0) : ?>
-                        <a class="list-group-item" data-toggle="modal" role="dialog" href="#video-modal-<?php echo $day ?>"><?php echo $month . ' ' . $day . ', ' . $year; ?></a>
-                        <div id="video-modal-<?php echo $day ?>" class="modal fade" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title"><?php echo $month . ' ' . $day . ', ' . $year; ?></h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="video-wrapper">
-                                            <video controls autoplay="none">
-                                                <source src="http://video.revyweather.com/<?php echo $video ?>.webm" type="video/webm">
-                                                <source src="http://video.revyweather.com/<?php echo $video ?>.mp4" type="video/mp4">
-                                                Your browser does not support modern technologies.
-                                            </video>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        &nbsp;
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-                    <?php $count++; ?>
-                <?php endforeach; ?>
+            <div class="btn-group">
+                <button id="timelapse-previous" value="" type="button" class="btn btn-info btn-sm">Previous Month</button>
+                <button id="timelapse-next" value="" type="button" class="btn btn-info btn-sm">Next Month</button>
+                <input id="timelapse-year-previous" value="" type="hidden"/>
+                <input id="timelapse-year-next" value="" type="hidden"/>
             </div>
+            <p>&nbsp;</p>
+            <div id="timelapse-calendar" class="timelapse-calendar"></div>
         </div>
-
         <div class="filler"></div>
     </div>
 </section>

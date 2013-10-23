@@ -14,7 +14,12 @@
               //          ->prependStylesheet($this->basePath() . '/css/style.css')
               //          ->prependStylesheet($this->basePath() . '/css/bootstrap-blue-sky.min.css') ?>
 
-        <?php echo $this->muneeCss(array('/css/bootstrap-blue-sky.min.css', '/css/daterangepicker-bs3.css', '/css/style.css'), true); ?>
+        <?php echo $this->muneeCss(array(
+            '/css/bootstrap-blue-sky.min.css',
+            '/css/daterangepicker-bs3.css',
+            '/css/style.css',
+            '/css/video-js.css'
+            ), true); ?>
 
         <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 
@@ -31,7 +36,8 @@
             '/js/highcharts/highcharts.js',
             '/js/moment.min.js',
             '/js/daterangepicker.js',
-            '/js/favico-0.2.0.min.js'
+            '/js/favico-0.2.0.min.js',
+            '/js/video.dev.js'
         ), true); ?>
         <script src="http://openlayers.org/api/OpenLayers.js"></script>
         <script src="http://maps.google.com/maps/api/js?v=3&amp;sensor=false"></script>
