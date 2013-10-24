@@ -172,51 +172,24 @@ class TimelapseRenderer implements CalendarRendererInterface
         }
 
         if ($day->getAction()) {
-            $output .= '<a data-toggle="modal" role="dialog" href="#video-modal-' . $day->getAction()['dayName'] . '">';
+            $output .= '<a class="timelapse-start-video"';
+            $output .= 'rel="'.$day->getAction()['year'] . '/' . $day->getAction()['monthName'] . '/' . $day->getAction()['dayName'] . '/' . $day->getAction()['monthName'] . '-' . $day->getAction()['dayName'].'">';
             $output .= $day;
             $output .= '</a>';
-            $output .= '<div id="video-modal-' . $day->getAction()['dayName'] . '" class="modal fade" aria-hidden="true">';
-            $output .= '<div class="modal-dialog">';
-            $output .= '<div class="modal-content">';
-            $output .= '<div class="modal-header">';
-            $output .= '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
-            $output .= '<h4 class="modal-title">' . $day->getAction()['monthName'] . ' ' . $day->getAction()['dayName'] . ', ' . $day->getAction()['year'] . '</h4>';
-            $output .= '</div>';
-            $output .= '<div class="modal-body">';
-            $output .= '<div class="video-wrapper">';
-            $output .= '<video id="' . $day->getAction()['dayName'] . '" controls preload="none" class="video-js vjs-default-skin vjs-big-play-centered" width="100%" height="720">';
-            $output .= '<source src="http://video.revyweather.com/' . $day->getAction()['year'] . '/' . $day->getAction()['monthName'] . '/' . $day->getAction()['dayName'] . '/' . $day->getAction()['monthName'] . '-' . $day->getAction()['dayName'] . '.webm" type="video/webm">';
-            $output .= '<source src="http://video.revyweather.com/' . $day->getAction()['year'] . '/' . $day->getAction()['monthName'] . '/' . $day->getAction()['dayName'] . '/' . $day->getAction()['monthName'] . '-' . $day->getAction()['dayName'] . '.mp4" type="video/mp4">';
-            $output .= 'Your browser does not support modern technologies.';
-            $output .= '</video>';
-            $output .= '</div>';
-            $output .= '</div>';
-            $output .= '<div class="modal-footer">';
-            $output .= '&nbsp;';
-            $output .= '</div>';
-            $output .= '</div>';
-            $output .= '</div>';
-            $output .= '</div>';
-            // initialize video.js
-            $output .= '<script>';
-            $output .= '$(document).ready(function() {videojs("' . $day->getAction()['dayName'] . '", {}, function(){});';
-            $output .= '});</script>';
-
         } else {
             $output .= $day;
         }
-
-
         $output .= '</td>';
 
         return $output;
     }
 
+
     /**
-     * Render a month table internally.
+     * Render a month
      *
-     * @param  int $yearNo
-     * @param  int $monthNo
+     * @param $year
+     * @param $month
      * @return string
      */
     public function renderMonth($year, $month)
@@ -260,10 +233,35 @@ class TimelapseRenderer implements CalendarRendererInterface
         }
 
         $output .= '</tr>';
-
         $output .= '</tbody>';
-
         $output .= '</table>';
+
+        $output .= '<script>';
+        $output .= 'jQuery(document).ready(function($) {';
+        $output .= '$(".timelapse-start-video").click(function(e) {';
+        $output .= 'var target = $(this).attr("rel");';
+        $output .= 'var path = "http://video.revyweather.com/";';
+        $output .= 'var videoPlayer = videojs("timelapse-video");';
+        $output .= 'var dates = target.split("/");';
+        $output .= '$("#timelapse-video-title").html(dates[1] + " " + dates[2] + ", " + dates[0]);';
+        $output .= 'videoPlayer.ready(function() {';
+        $output .= 'var timelapsePlayer = this;';
+        $output .= '$("#timelapse-video_html5_api").hide();';
+        $output .= 'timelapsePlayer.pause();';
+        $output .= '$("video source:nth-child(1)").attr("src", path + target + ".webm");';
+        $output .= '$("video source:nth-child(2)").attr("src", path + target + ".mp4");';
+        $output .= '$(".vjs-big-play-button").show();';
+        $output .= '$("#timelapse-video").removeClass("vjs-playing").addClass("vjs-pause");';
+        $output .= 'timelapsePlayer.load();';
+        $output .= '$("#timelapse-video_html5_api").show();';
+        $output .= 'videoPlayer.on("play", hideBigPlayButton);';
+        $output .= '});';
+        $output .= '});';
+        $output .= 'var hideBigPlayButton = function() {';
+        $output .= '$(".vjs-big-play-button").hide();';
+        $output .= '};';
+        $output .= '});';
+        $output .= '</script>';
 
         return $output;
     }

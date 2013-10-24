@@ -74,11 +74,11 @@ h4.modal-title {
     height: auto !important;
 }
 
+.timelapse-video-title {margin: 0 0 10px 0;}
+.timelapse-start-video {cursor: pointer;}
 .modal-footer {
     border-top: none;
 }
-
-
 
 .zf-green { color: #68b604; }
 
