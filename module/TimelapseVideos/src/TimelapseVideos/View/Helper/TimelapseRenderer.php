@@ -203,11 +203,8 @@ class TimelapseRenderer implements CalendarRendererInterface
         $column = 0;
 
         $output  = '<table class="bm-calendar ' . $monthClass . ' ' . $yearClass .'">';
-
         $output .= $this->monthTitle($month, $year);
-
         $output .= '<tbody>';
-
         $output .= '<tr>';
 
         $blankCells = ($month->startDay() - $this->startDay + 7) % 7;
@@ -238,16 +235,20 @@ class TimelapseRenderer implements CalendarRendererInterface
 
         $output .= '<script>';
         $output .= 'jQuery(document).ready(function($) {';
+
         $output .= '$(".timelapse-start-video").click(function(e) {';
         $output .= 'var target = $(this).attr("rel");';
         $output .= 'var path = "http://video.revyweather.com/";';
         $output .= 'var videoPlayer = videojs("timelapse-video");';
         $output .= 'var dates = target.split("/");';
+
         $output .= '$("#timelapse-video-title").html(dates[1] + " " + dates[2] + ", " + dates[0]);';
+
         $output .= 'videoPlayer.ready(function() {';
         $output .= 'var timelapsePlayer = this;';
         $output .= '$("#timelapse-video_html5_api").hide();';
         $output .= 'timelapsePlayer.pause();';
+        $output .= '$("video").attr("src", path + target + ".webm");';
         $output .= '$("video source:nth-child(1)").attr("src", path + target + ".webm");';
         $output .= '$("video source:nth-child(2)").attr("src", path + target + ".mp4");';
         $output .= '$(".vjs-big-play-button").show();';
@@ -255,6 +256,7 @@ class TimelapseRenderer implements CalendarRendererInterface
         $output .= 'timelapsePlayer.load();';
         $output .= '$("#timelapse-video_html5_api").show();';
         $output .= 'videoPlayer.on("play", hideBigPlayButton);';
+
         $output .= '});';
         $output .= '});';
         $output .= 'var hideBigPlayButton = function() {';
